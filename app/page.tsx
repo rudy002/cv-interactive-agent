@@ -1,7 +1,6 @@
 import Avatar3d from "@/components/Avatar3d";
 import ChatInterfaces from "@/components/ChatInterfaces";
 import ThemeToggle from "@/components/ThemeToggle";
-import ThemeDebug from "@/components/ThemeDebug";
 
 export default function Home() {
   return (
@@ -20,7 +19,6 @@ export default function Home() {
           <ThemeToggle />
         </div>
         <ChatInterfaces />
-        <ThemeDebug />
       </main>
     </div>
   );
