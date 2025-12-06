@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSpeech } from "@/hooks/useSpeech";
 
 interface Message {
   id: string;
@@ -8,9 +9,21 @@ interface Message {
   content: string;
 }
 
-export default function ChatInterfaces() {
+interface ChatInterfacesProps {
+  onSpeakingChange?: (isSpeaking: boolean, currentChar?: string) => void;
+}
+
+export default function ChatInterfaces({ onSpeakingChange }: ChatInterfacesProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
+  const [autoSpeak, setAutoSpeak] = useState(true);
+  const { speak, stop, isSpeaking, currentText, currentCharIndex } = useSpeech();
+
+  // Notifier le parent quand l'état de parole change avec le caractère actuel
+  useEffect(() => {
+    const currentChar = currentText[currentCharIndex] || '';
+    onSpeakingChange?.(isSpeaking, currentChar);
+  }, [isSpeaking, currentCharIndex, currentText, onSpeakingChange]);
 
   const handleSend = () => {
     if (!inputValue.trim()) return;
@@ -29,9 +42,14 @@ export default function ChatInterfaces() {
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "C'est une réponse de test pour voir le design des messages !",
+        content: "Bonjour ! Je suis votre assistant IA. Je peux vous parler de mon parcours, mes compétences et mes projets. N'hésitez pas à me poser des questions !",
       };
       setMessages((prev) => [...prev, assistantMessage]);
+      
+      // Faire parler l'avatar si autoSpeak est activé
+      if (autoSpeak) {
+        speak(assistantMessage.content, { lang: 'fr-FR', rate: 1.0 });
+      }
     }, 500);
   };
 
@@ -89,7 +107,48 @@ export default function ChatInterfaces() {
 
       {/* Input de message */}
       <div className="flex items-center justify-center px-4 pb-6 pt-4">
-        <div className="w-full max-w-3xl">
+        <div className="w-full max-w-3xl space-y-3">
+          {/* Contrôles audio */}
+          <div className="flex items-center justify-between px-2">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setAutoSpeak(!autoSpeak)}
+                className={`p-2 rounded-lg transition-colors ${
+                  autoSpeak 
+                    ? 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900' 
+                    : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
+                }`}
+                title={autoSpeak ? "Son activé" : "Son désactivé"}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {autoSpeak ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                  )}
+                </svg>
+              </button>
+              {isSpeaking && (
+                <button
+                  onClick={stop}
+                  className="p-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors"
+                  title="Arrêter la lecture"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <rect x="6" y="6" width="12" height="12" />
+                  </svg>
+                </button>
+              )}
+            </div>
+            {isSpeaking && (
+              <span className="text-xs text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                En train de parler...
+              </span>
+            )}
+          </div>
+
+          {/* Input */}
           <div className="relative flex items-center rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-lg dark:shadow-zinc-900/50 px-4 py-3">
             <input
               type="text"

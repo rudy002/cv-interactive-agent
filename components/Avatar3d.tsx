@@ -16,11 +16,13 @@ declare global {
 
 interface AvatarModelProps {
   expressions?: Record<string, number>;
+  isSpeaking?: boolean;
 }
 
-function AvatarModel({ expressions = {} }: AvatarModelProps) {
+function AvatarModel({ expressions = {}, isSpeaking = false }: AvatarModelProps) {
   const { scene: originalScene } = useGLTF("/models/rudy_avatar.glb");
   const animationFrameRef = useRef<number | undefined>(undefined);
+  const speakingAnimRef = useRef<number | undefined>(undefined);
 
   // Cloner la scène pour éviter les problèmes de partage
   const scene = useMemo(() => {
@@ -57,6 +59,55 @@ function AvatarModel({ expressions = {} }: AvatarModelProps) {
   }, [originalScene]);
 
   if (!scene) return null;
+
+  // Animation de parole
+  useEffect(() => {
+    console.log('🎭 Animation state:', { isSpeaking, hasScene: !!scene });
+    
+    if (!scene || !isSpeaking) {
+      if (speakingAnimRef.current) {
+        cancelAnimationFrame(speakingAnimRef.current);
+        speakingAnimRef.current = undefined;
+      }
+      // Reset position/rotation
+      if (scene) {
+        scene.rotation.y = 0;
+        scene.rotation.z = 0;
+      }
+      return;
+    }
+
+    console.log('✅ Démarrage animation de parole');
+    const startTime = performance.now();
+    const initialY = scene.position.y;
+
+    const animateSpeaking = () => {
+      const elapsed = (performance.now() - startTime) / 1000;
+      
+      // Animation de "respiration" et légère rotation - AMPLIFIÉES
+      const breathe = Math.sin(elapsed * 8) * 0.05; // Amplitude augmentée
+      const sway = Math.sin(elapsed * 2) * 0.1; // Amplitude augmentée
+      
+      scene.rotation.y = sway;
+      scene.rotation.z = breathe * 0.5;
+      scene.position.y = initialY + (breathe * 0.2);
+      
+      speakingAnimRef.current = requestAnimationFrame(animateSpeaking);
+    };
+
+    speakingAnimRef.current = requestAnimationFrame(animateSpeaking);
+
+    return () => {
+      console.log('🛑 Arrêt animation de parole');
+      if (speakingAnimRef.current) {
+        cancelAnimationFrame(speakingAnimRef.current);
+      }
+      // Reset position/rotation
+      scene.rotation.y = 0;
+      scene.rotation.z = 0;
+      scene.position.y = initialY;
+    };
+  }, [scene, isSpeaking]);
 
   // Appliquer les expressions faciales
   useEffect(() => {
@@ -157,9 +208,10 @@ useGLTF.preload("/models/rudy_avatar.glb");
  */
 interface Avatar3dProps {
   expressions?: Record<string, number>;
+  isSpeaking?: boolean;
 }
 
-export default function Avatar3d({ expressions }: Avatar3dProps = { expressions: {} }) {
+export default function Avatar3d({ expressions, isSpeaking = false }: Avatar3dProps = { expressions: {}, isSpeaking: false }) {
   return (
     <div className="w-full h-full flex items-center justify-center">
       <div className="relative w-full max-w-[640px] aspect-[3/4] sm:aspect-square">
@@ -187,7 +239,7 @@ export default function Avatar3d({ expressions }: Avatar3dProps = { expressions:
               environment="city"
               shadows="contact"
             >
-              <AvatarModel expressions={expressions} />
+              <AvatarModel expressions={expressions} isSpeaking={isSpeaking} />
             </Stage>
           </Suspense>
         </Canvas>
