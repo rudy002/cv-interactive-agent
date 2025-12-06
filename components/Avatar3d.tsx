@@ -49,7 +49,9 @@ function AvatarModel({ expressions = {} }: AvatarModelProps) {
     // Ajuster la position verticale de l'avatar (remonter)
     cloned.position.y += 0.4; // Augmenter pour remonter l'avatar
     
-    // Corriger l'inclinaison de la tête (légèrement vers l'avant)
+    // Incliner fortement l'avatar pour qu'il regarde vers la caméra en hauteur
+    // Rotation importante pour compenser la vue plongeante
+    cloned.rotation.x = -Math.PI * 0.35; // ~63 degrés - tête levée vers la caméra
     
     return cloned;
   }, [originalScene]);
@@ -163,13 +165,13 @@ export default function Avatar3d({ expressions }: Avatar3dProps = { expressions:
       <div className="relative w-full max-w-[640px] aspect-[3/4] sm:aspect-square">
         <Canvas
           camera={{ 
-            position: [0, 1.6, 2.5], 
+            position: [0, 1.5, 3], 
             fov: 30
           }}
           gl={{ antialias: true, alpha: true }}
           dpr={[1, 2]}
           onCreated={({ camera }: { camera: THREE.PerspectiveCamera }) => {
-            camera.lookAt(0, 1.8, 0); // Ajusté pour suivre l'avatar qui monte
+            camera.lookAt(0, 1.2, 0); // Regarde le visage de l'avatar
             camera.updateProjectionMatrix();
           }}
         >
