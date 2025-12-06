@@ -166,7 +166,7 @@ export default function Avatar3d({ expressions }: Avatar3dProps = { expressions:
         <Canvas
           camera={{ 
             position: [0, 1.5, 3], 
-            fov: 30
+            fov: 10
           }}
           gl={{ antialias: true, alpha: true }}
           dpr={[1, 2]}
