@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useSpeech } from "@/hooks/useSpeech";
+import { useSpeechContext } from "@/contexts/SpeechContext";
 
 interface Message {
   id: string;
@@ -13,7 +13,7 @@ export default function ChatInterfaces() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [autoSpeak, setAutoSpeak] = useState(true);
-  const { speak, stop, isSpeaking } = useSpeech();
+  const { speak, stop, isSpeaking } = useSpeechContext();
 
   const handleSend = () => {
     if (!inputValue.trim()) return;
@@ -27,7 +27,7 @@ export default function ChatInterfaces() {
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
 
-    // Simulation d'une réponse de l'assistant (pour tester le design)
+    // Simulation d'une réponse de l'assistant
     setTimeout(() => {
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
