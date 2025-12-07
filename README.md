@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💼 CV Interactif - Rudy Haddad
 
-## Getting Started
+CV interactif avec agent conversationnel alimenté par n8n + RAG
 
-First, run the development server:
+## 🎯 État actuel
+
+**Version** : Base propre prête pour intégration n8n
+
+### ✅ Fonctionnalités implémentées
+- Interface de chat moderne et responsive
+- Thème clair/sombre avec toggle
+- Emplacement réservé pour avatar (à intégrer plus tard)
+- Architecture Next.js 15 optimisée
+
+### 🚧 À faire
+- Connexion au workflow n8n pour le RAG
+- Intégration de l'avatar parlant
+- Déploiement production
+
+## 🚀 Démarrage rapide
 
 ```bash
+# Installation des dépendances
+npm install
+
+# Lancement du serveur de développement
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000) dans votre navigateur.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Structure du projet
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+cv-ai-interactive/
+├── app/
+│   ├── layout.tsx          # Layout principal
+│   ├── page.tsx            # Page d'accueil (Chat + Avatar placeholder)
+│   └── globals.css         # Styles globaux
+├── components/
+│   ├── ChatInterfaces.tsx  # Interface de chat
+│   ├── ThemeProvider.tsx   # Gestion du thème
+│   └── ThemeToggle.tsx     # Bouton toggle thème
+├── public/
+│   └── models/             # Modèles 3D pour avatar (futur)
+└── NEXT_STEPS.md           # Guide d'intégration n8n
+```
 
-## Learn More
+## 🔧 Technologies
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js 15** - Framework React
+- **TypeScript** - Typage statique
+- **Tailwind CSS** - Styling
+- **React Three Fiber** - 3D (pour avatar futur)
+- **n8n** - Orchestration workflow + RAG (à intégrer)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📝 Prochaines étapes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Voir le fichier [NEXT_STEPS.md](./NEXT_STEPS.md) pour le guide complet d'intégration n8n.
 
-## Deploy on Vercel
+### 1. Configurer n8n
+- Créer un workflow avec webhook
+- Ajouter votre RAG (Pinecone, Supabase, etc.)
+- Configurer le LLM (OpenAI, Claude, etc.)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Connecter le chat
+- Modifier `ChatInterfaces.tsx`
+- Ajouter l'URL du webhook n8n
+- Tester l'intégration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3. Avatar (optionnel)
+- Réintégrer l'avatar 3D
+- Ajouter le TTS
+- Synchronisation labiale
+
+## 🌐 Déploiement
+
+### Vercel (recommandé)
+```bash
+npm run build
+vercel deploy
+```
+
+### Variables d'environnement
+```bash
+NEXT_PUBLIC_N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/chat
+```
+
+## 📖 Documentation
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [n8n Documentation](https://docs.n8n.io/)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+
+## 📧 Contact
+
+Rudy Haddad - [Votre email/LinkedIn]
+
+---
+
+**Note** : Ce projet est actuellement en phase de développement. La partie avatar a été temporairement désactivée pour se concentrer sur l'intégration n8n + RAG.
