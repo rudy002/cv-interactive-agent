@@ -6,7 +6,7 @@ import { Suspense, useRef, useEffect } from "react";
 import * as THREE from "three";
 
 // Chemin local du modèle Ready Player Me
-const MODEL_URL = "/models/rudy_readyplayerme.glb";
+const MODEL_URL = "/models/rudy2_readyplayerme.glb";
 
 export interface AvatarPanelProps {
   isSpeaking?: boolean;
