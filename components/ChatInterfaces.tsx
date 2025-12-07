@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSpeech } from "@/hooks/useSpeech";
 
 interface Message {
@@ -9,21 +9,11 @@ interface Message {
   content: string;
 }
 
-interface ChatInterfacesProps {
-  onSpeakingChange?: (isSpeaking: boolean, currentChar?: string) => void;
-}
-
-export default function ChatInterfaces({ onSpeakingChange }: ChatInterfacesProps) {
+export default function ChatInterfaces() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [autoSpeak, setAutoSpeak] = useState(true);
-  const { speak, stop, isSpeaking, currentText, currentCharIndex } = useSpeech();
-
-  // Notifier le parent quand l'état de parole change avec le caractère actuel
-  useEffect(() => {
-    const currentChar = currentText[currentCharIndex] || '';
-    onSpeakingChange?.(isSpeaking, currentChar);
-  }, [isSpeaking, currentCharIndex, currentText, onSpeakingChange]);
+  const { speak, stop, isSpeaking } = useSpeech();
 
   const handleSend = () => {
     if (!inputValue.trim()) return;
@@ -46,7 +36,7 @@ export default function ChatInterfaces({ onSpeakingChange }: ChatInterfacesProps
       };
       setMessages((prev) => [...prev, assistantMessage]);
       
-      // Faire parler l'avatar si autoSpeak est activé
+      // Faire parler si autoSpeak est activé
       if (autoSpeak) {
         speak(assistantMessage.content, { lang: 'fr-FR', rate: 1.0 });
       }

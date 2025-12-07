@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "CV Interactif - Rudy Haddad",
-  description: "CV interactif avec agent AI - Discutez avec mon avatar pour en savoir plus sur mon parcours",
+  description: "CV interactif avec agent AI - Discutez pour en savoir plus sur mon parcours",
 };
 
 export default function RootLayout({
