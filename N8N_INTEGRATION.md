@@ -73,3 +73,4 @@ Ouvrez `http://localhost:3000` et commencez à discuter !
 - Simple Memory gère l'historique de conversation automatiquement
 - Le fichier `.env.local` ne doit JAMAIS être commité dans Git
 
+checkpoint
