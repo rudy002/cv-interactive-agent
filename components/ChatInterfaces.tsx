@@ -11,9 +11,12 @@ interface Message {
 export default function ChatInterfaces() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  // Générer un sessionId unique pour cette session de chat
+  const [sessionId] = useState(() => `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
 
-  const handleSend = () => {
-    if (!inputValue.trim()) return;
+  const handleSend = async () => {
+    if (!inputValue.trim() || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -23,17 +26,52 @@ export default function ChatInterfaces() {
 
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
+    setIsLoading(true);
 
-    // Simulation d'une réponse de l'assistant
-    // TODO: Remplacer par l'appel à n8n
-    setTimeout(() => {
-      const assistantMessage: Message = {
+    try {
+      // Appel à l'API qui communique avec n8n
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: userMessage.content,
+          conversationHistory: messages,
+          sessionId: sessionId,  // Envoyer le sessionId pour Simple Memory
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: data.message,
+        };
+        setMessages((prev) => [...prev, assistantMessage]);
+      } else {
+        // En cas d'erreur, afficher un message d'erreur
+        const errorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "assistant",
+          content: "Désolé, une erreur s'est produite. Veuillez réessayer.",
+        };
+        setMessages((prev) => [...prev, errorMessage]);
+        console.error('Erreur API:', data.error);
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi du message:', error);
+      const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "Bonjour ! Je suis votre assistant IA. Je peux vous parler de mon parcours, mes compétences et mes projets. N'hésitez pas à me poser des questions !",
+        content: "Désolé, je ne peux pas me connecter au serveur. Veuillez réessayer plus tard.",
       };
-      setMessages((prev) => [...prev, assistantMessage]);
-    }, 500);
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -85,6 +123,20 @@ export default function ChatInterfaces() {
               )}
             </div>
           ))}
+          {isLoading && (
+            <div className="flex gap-4 justify-start">
+              <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0">
+                <span className="text-xs text-zinc-600 dark:text-zinc-400">RUDY</span>
+              </div>
+              <div className="max-w-[80%] rounded-2xl px-4 py-3 bg-zinc-100 dark:bg-zinc-800">
+                <div className="flex gap-1">
+                  <div className="w-2 h-2 bg-zinc-400 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-2 h-2 bg-zinc-400 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-2 h-2 bg-zinc-400 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -103,7 +155,7 @@ export default function ChatInterfaces() {
             />
             <button
               onClick={handleSend}
-              disabled={!inputValue.trim()}
+              disabled={!inputValue.trim() || isLoading}
               className="ml-2 p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <svg
