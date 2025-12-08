@@ -4,17 +4,20 @@ CV interactif avec agent conversationnel alimenté par n8n + RAG
 
 ## 🎯 État actuel
 
-**Version** : Base propre prête pour intégration n8n
+**Version** : 1.0 - Intégration n8n fonctionnelle ✅
 
 ### ✅ Fonctionnalités implémentées
-- Interface de chat moderne et responsive
-- Thème clair/sombre avec toggle
-- Emplacement réservé pour avatar (à intégrer plus tard)
-- Architecture Next.js 15 optimisée
+- ✅ Interface de chat moderne et responsive
+- ✅ Thème clair/sombre avec toggle
+- ✅ **Connexion n8n avec système RAG**
+- ✅ **Gestion de l'historique de conversation (Simple Memory)**
+- ✅ Gestion des erreurs et état de chargement
+- ✅ Architecture Next.js 15 optimisée
 
-### 🚧 À faire
-- Connexion au workflow n8n pour le RAG
-- Intégration de l'avatar parlant
+### 🚧 À venir
+- Intégration de l'avatar 3D parlant
+- Synthèse vocale (TTS)
+- Reconnaissance vocale
 - Déploiement production
 
 ## 🚀 Démarrage rapide
@@ -22,6 +25,9 @@ CV interactif avec agent conversationnel alimenté par n8n + RAG
 ```bash
 # Installation des dépendances
 npm install
+
+# Créer le fichier .env.local avec votre URL n8n
+echo "N8N_WEBHOOK_URL=https://votre-n8n.com/webhook/votre-id" > .env.local
 
 # Lancement du serveur de développement
 npm run dev
@@ -34,8 +40,11 @@ Ouvrir [http://localhost:3000](http://localhost:3000) dans votre navigateur.
 ```
 cv-ai-interactive/
 ├── app/
+│   ├── api/
+│   │   └── chat/
+│   │       └── route.ts    # API route pour n8n
 │   ├── layout.tsx          # Layout principal
-│   ├── page.tsx            # Page d'accueil (Chat + Avatar placeholder)
+│   ├── page.tsx            # Page d'accueil
 │   └── globals.css         # Styles globaux
 ├── components/
 │   ├── ChatInterfaces.tsx  # Interface de chat
@@ -43,7 +52,7 @@ cv-ai-interactive/
 │   └── ThemeToggle.tsx     # Bouton toggle thème
 ├── public/
 │   └── models/             # Modèles 3D pour avatar (futur)
-└── NEXT_STEPS.md           # Guide d'intégration n8n
+└── N8N_INTEGRATION.md      # Documentation n8n
 ```
 
 ## 🔧 Technologies
@@ -54,24 +63,29 @@ cv-ai-interactive/
 - **React Three Fiber** - 3D (pour avatar futur)
 - **n8n** - Orchestration workflow + RAG (à intégrer)
 
-## 📝 Prochaines étapes
+## 📝 Configuration n8n
 
-Voir le fichier [NEXT_STEPS.md](./NEXT_STEPS.md) pour le guide complet d'intégration n8n.
+Voir le fichier [N8N_INTEGRATION.md](./N8N_INTEGRATION.md) pour la documentation complète.
 
-### 1. Configurer n8n
-- Créer un workflow avec webhook
-- Ajouter votre RAG (Pinecone, Supabase, etc.)
-- Configurer le LLM (OpenAI, Claude, etc.)
+### Workflow n8n requis :
+```
+Webhook → Simple Memory → AI Agent (+ Vector Store) → Respond
+```
 
-### 2. Connecter le chat
-- Modifier `ChatInterfaces.tsx`
-- Ajouter l'URL du webhook n8n
-- Tester l'intégration
+### Format des données :
 
-### 3. Avatar (optionnel)
-- Réintégrer l'avatar 3D
-- Ajouter le TTS
-- Synchronisation labiale
+**Envoi** :
+```json
+{
+  "sessionId": "session-xxx",
+  "chatInput": "message utilisateur"
+}
+```
+
+**Réception** :
+```json
+[{ "output": "réponse de l'IA" }]
+```
 
 ## 🌐 Déploiement
 
@@ -82,8 +96,9 @@ vercel deploy
 ```
 
 ### Variables d'environnement
+Créez un fichier `.env.local` :
 ```bash
-NEXT_PUBLIC_N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/chat
+N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/your-id
 ```
 
 ## 📖 Documentation
@@ -98,4 +113,4 @@ Rudy Haddad - [Votre email/LinkedIn]
 
 ---
 
-**Note** : Ce projet est actuellement en phase de développement. La partie avatar a été temporairement désactivée pour se concentrer sur l'intégration n8n + RAG.
+**Note** : L'intégration n8n + RAG est fonctionnelle. L'avatar 3D sera intégré dans une prochaine version.

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface Message {
   id: string;
@@ -8,12 +8,29 @@ interface Message {
   content: string;
 }
 
+const WELCOME_MESSAGE: Message = {
+  id: "welcome",
+  role: "assistant",
+  content: "Bonjour ! 👋\n\nJe suis l'assistant virtuel de Rudy Haddad. Je suis là pour répondre à toutes vos questions concernant :\n\n• Mon parcours professionnel\n• Mes compétences techniques\n• Mes projets et réalisations\n• Mon expérience\n\nN'hésitez pas à me poser vos questions !",
+};
+
 export default function ChatInterfaces() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  // Générer un sessionId unique pour cette session de chat
-  const [sessionId] = useState(() => `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`);
+  const [sessionId] = useState(() => 
+    `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+  );
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading]);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handleSend = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -29,16 +46,12 @@ export default function ChatInterfaces() {
     setIsLoading(true);
 
     try {
-      // Appel à l'API qui communique avec n8n
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: userMessage.content,
-          conversationHistory: messages,
-          sessionId: sessionId,  // Envoyer le sessionId pour Simple Memory
+          sessionId: sessionId,
         }),
       });
 
@@ -52,7 +65,6 @@ export default function ChatInterfaces() {
         };
         setMessages((prev) => [...prev, assistantMessage]);
       } else {
-        // En cas d'erreur, afficher un message d'erreur
         const errorMessage: Message = {
           id: (Date.now() + 1).toString(),
           role: "assistant",
@@ -81,18 +93,21 @@ export default function ChatInterfaces() {
     }
   };
 
+  const handleSuggestionClick = (suggestion: string) => {
+    setInputValue(suggestion);
+    inputRef.current?.focus();
+  };
+
+  const suggestions = [
+    "Quel est ton parcours professionnel ?",
+    "Quelles sont tes compétences principales ?",
+    "Parle-moi de tes projets",
+  ];
+
   return (
     <div className="flex flex-col h-full w-full">
-      {/* Zone de messages */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto scroll-smooth">
         <div className="w-full max-w-3xl mx-auto px-4 py-6 space-y-6">
-          {messages.length === 0 && (
-            <div className="flex items-center justify-center h-full">
-              <p className="text-zinc-500 dark:text-zinc-400 text-sm">
-                Commencez une conversation...
-              </p>
-            </div>
-          )}
           {messages.map((message) => (
             <div
               key={message.id}
@@ -101,65 +116,90 @@ export default function ChatInterfaces() {
               }`}
             >
               {message.role === "assistant" && (
-                <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0">
-                  <span className="text-xs text-zinc-600 dark:text-zinc-400">RUDY</span>
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700 flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">RH</span>
                 </div>
               )}
               <div
-                className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                className={`max-w-[80%] rounded-2xl px-5 py-3.5 shadow-sm ${
                   message.role === "user"
-                    ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900"
-                    : "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
+                    ? "bg-gradient-to-br from-zinc-900 to-zinc-800 dark:from-zinc-100 dark:to-zinc-50 text-white dark:text-zinc-900"
+                    : "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700"
                 }`}
               >
-                <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                <p className="text-base leading-relaxed whitespace-pre-wrap">
                   {message.content}
                 </p>
               </div>
               {message.role === "user" && (
-                <div className="w-8 h-8 rounded-full bg-zinc-900 dark:bg-zinc-100 flex items-center justify-center flex-shrink-0">
-                  <span className="text-xs text-white dark:text-zinc-900">Vous</span>
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-zinc-900 to-zinc-800 dark:from-zinc-100 dark:to-zinc-50 flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <svg className="w-5 h-5 text-white dark:text-zinc-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
                 </div>
               )}
             </div>
           ))}
           {isLoading && (
-            <div className="flex gap-4 justify-start">
-              <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0">
-                <span className="text-xs text-zinc-600 dark:text-zinc-400">RUDY</span>
+            <div className="flex gap-4 justify-start animate-in fade-in duration-300">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700 flex items-center justify-center flex-shrink-0 shadow-sm">
+                <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">RH</span>
               </div>
-              <div className="max-w-[80%] rounded-2xl px-4 py-3 bg-zinc-100 dark:bg-zinc-800">
-                <div className="flex gap-1">
-                  <div className="w-2 h-2 bg-zinc-400 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-2 h-2 bg-zinc-400 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-2 h-2 bg-zinc-400 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              <div className="max-w-[80%] rounded-2xl px-5 py-3.5 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 bg-zinc-400 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-2.5 h-2.5 bg-zinc-400 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-2.5 h-2.5 bg-zinc-400 dark:bg-zinc-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                 </div>
               </div>
             </div>
           )}
+          <div ref={messagesEndRef} />
         </div>
       </div>
 
-      {/* Input de message */}
-      <div className="flex items-center justify-center px-4 pb-6 pt-4">
+      {messages.length === 1 && !isLoading && (
+        <div className="px-4 pb-3">
+          <div className="w-full max-w-3xl mx-auto">
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2.5 px-1 font-medium">
+              Suggestions :
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {suggestions.map((suggestion, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                  className="px-4 py-2.5 text-sm rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors border border-zinc-200 dark:border-zinc-700"
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="flex items-center justify-center px-4 pb-6 pt-4 border-t border-zinc-100 dark:border-zinc-800 bg-white/50 dark:bg-black/50 backdrop-blur-sm">
         <div className="w-full max-w-3xl">
-          {/* Input */}
-          <div className="relative flex items-center rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-lg dark:shadow-zinc-900/50 px-4 py-3">
+          <div className="relative flex items-center rounded-2xl border-2 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-lg dark:shadow-zinc-900/50 px-4 py-3 focus-within:border-zinc-400 dark:focus-within:border-zinc-600 transition-colors">
             <input
+              ref={inputRef}
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="write your message here..."
-              className="flex-1 bg-transparent outline-none text-foreground placeholder:text-zinc-400 dark:placeholder:text-zinc-500 text-sm"
+              placeholder="Posez votre question..."
+              disabled={isLoading}
+              className="flex-1 bg-transparent outline-none text-foreground placeholder:text-zinc-400 dark:placeholder:text-zinc-500 text-base disabled:opacity-50"
             />
             <button
               onClick={handleSend}
               disabled={!inputValue.trim() || isLoading}
-              className="ml-2 p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="ml-2 p-3 rounded-xl bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-zinc-900 dark:disabled:hover:bg-zinc-100"
+              title="Envoyer"
             >
               <svg
-                className="w-5 h-5 text-zinc-600 dark:text-zinc-400"
+                className="w-5 h-5 text-white dark:text-zinc-900"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -173,6 +213,9 @@ export default function ChatInterfaces() {
               </svg>
             </button>
           </div>
+          <p className="text-sm text-zinc-400 dark:text-zinc-600 mt-2.5 text-center">
+            Propulsé par IA • Données à jour
+          </p>
         </div>
       </div>
     </div>
