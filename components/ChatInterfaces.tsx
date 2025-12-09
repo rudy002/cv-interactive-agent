@@ -8,13 +8,17 @@ interface Message {
   content: string;
 }
 
+interface ChatInterfacesProps {
+  onTopicChange?: (topic: string) => void;
+}
+
 const WELCOME_MESSAGE: Message = {
   id: "welcome",
   role: "assistant",
-  content: "Bonjour ! 👋\n\nJe suis l'assistant virtuel de Rudy Haddad. Je suis là pour répondre à toutes vos questions concernant :\n\n• Mon parcours professionnel\n• Mes compétences techniques\n• Mes projets et réalisations\n• Mon expérience\n\nN'hésitez pas à me poser vos questions !",
+  content: "Hello! 👋\n\nI'm Rudy Haddad's virtual assistant. I'm here to answer all your questions about:\n\n• My professional background\n• My technical skills\n• My projects and achievements\n• My experience\n\nFeel free to ask me anything! The browser content on the left will automatically adapt to your questions.",
 };
 
-export default function ChatInterfaces() {
+export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -42,6 +46,12 @@ export default function ChatInterfaces() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    
+    // Détecte le sujet pour mettre à jour le MiniBrowser
+    if (onTopicChange) {
+      onTopicChange(inputValue);
+    }
+    
     setInputValue("");
     setIsLoading(true);
 
@@ -64,21 +74,26 @@ export default function ChatInterfaces() {
           content: data.message,
         };
         setMessages((prev) => [...prev, assistantMessage]);
+        
+        // Also detect topics in AI responses
+        if (onTopicChange) {
+          onTopicChange(data.message);
+        }
       } else {
         const errorMessage: Message = {
           id: (Date.now() + 1).toString(),
           role: "assistant",
-          content: "Désolé, une erreur s'est produite. Veuillez réessayer.",
+          content: "Sorry, an error occurred. Please try again.",
         };
         setMessages((prev) => [...prev, errorMessage]);
-        console.error('Erreur API:', data.error);
+        console.error('API Error:', data.error);
       }
     } catch (error) {
-      console.error('Erreur lors de l\'envoi du message:', error);
+      console.error('Error sending message:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "Désolé, je ne peux pas me connecter au serveur. Veuillez réessayer plus tard.",
+        content: "Sorry, I cannot connect to the server. Please try again later.",
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -99,9 +114,9 @@ export default function ChatInterfaces() {
   };
 
   const suggestions = [
-    "Quel est ton parcours professionnel ?",
-    "Quelles sont tes compétences principales ?",
-    "Parle-moi de tes projets",
+    "What's your professional background?",
+    "What are your main skills?",
+    "Tell me about your projects",
   ];
 
   return (
@@ -162,7 +177,7 @@ export default function ChatInterfaces() {
         <div className="px-4 pb-3">
           <div className="w-full max-w-3xl mx-auto">
             <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2.5 px-1 font-medium">
-              Suggestions :
+              Suggestions:
             </p>
             <div className="flex flex-wrap gap-2">
               {suggestions.map((suggestion, index) => (
@@ -188,7 +203,7 @@ export default function ChatInterfaces() {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Posez votre question..."
+              placeholder="Ask your question..."
               disabled={isLoading}
               className="flex-1 bg-transparent outline-none text-foreground placeholder:text-zinc-400 dark:placeholder:text-zinc-500 text-base disabled:opacity-50"
             />
@@ -196,7 +211,7 @@ export default function ChatInterfaces() {
               onClick={handleSend}
               disabled={!inputValue.trim() || isLoading}
               className="ml-2 p-3 rounded-xl bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-zinc-900 dark:disabled:hover:bg-zinc-100"
-              title="Envoyer"
+              title="Send"
             >
               <svg
                 className="w-5 h-5 text-white dark:text-zinc-900"
@@ -214,7 +229,7 @@ export default function ChatInterfaces() {
             </button>
           </div>
           <p className="text-sm text-zinc-400 dark:text-zinc-600 mt-2.5 text-center">
-            Propulsé par IA • Données à jour
+            Powered by AI • Up-to-date data
           </p>
         </div>
       </div>
