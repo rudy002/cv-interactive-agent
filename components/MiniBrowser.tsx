@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Globe, Home, Briefcase, Github, Linkedin, Code, ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
+import { Globe, Home, Briefcase, Code2, Linkedin, Code, ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
 import BrowserContent from "./BrowserContent";
 
 interface BrowserPage {
@@ -31,7 +31,7 @@ const PAGES: BrowserPage[] = [
     id: "github",
     name: "GitHub",
     url: "github.com/rudyhaddad",
-    icon: <Github className="w-4 h-4" />,
+    icon: <Code2 className="w-4 h-4" />,
     keywords: ["github", "code", "project", "projects", "repositories", "repo", "open source", "development", "built", "created", "developed"],
   },
   {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Star, GitFork } from "lucide-react";
+import { Code2, Star, GitFork } from "lucide-react";
 
 export default function GitHubPage() {
   const repos = [
@@ -46,7 +46,7 @@ export default function GitHubPage() {
             <div key={idx} className="bg-white dark:bg-zinc-900 rounded-lg p-5 shadow border border-zinc-200 dark:border-zinc-800 hover:border-blue-500 dark:hover:border-blue-500 transition-colors">
               <div className="flex items-start justify-between mb-2">
                 <h3 className="font-bold text-blue-600 dark:text-blue-400 text-lg flex items-center gap-2">
-                  <Github className="w-5 h-5" />
+                  <Code2 className="w-5 h-5" />
                   {repo.name}
                 </h3>
                 <span className="text-xs px-2 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">

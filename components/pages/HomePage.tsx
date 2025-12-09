@@ -1,6 +1,6 @@
 "use client";
 
-import { Linkedin, Github, MapPin, Mail, ExternalLink } from "lucide-react";
+import { Linkedin, Code2, MapPin, Mail, ExternalLink } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -73,7 +73,7 @@ export default function HomePage() {
             rel="noopener noreferrer"
             className="flex items-center gap-3 bg-zinc-800 hover:bg-zinc-900 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-white rounded-xl p-4 transition-colors shadow-lg"
           >
-            <Github className="w-5 h-5" />
+            <Code2 className="w-5 h-5" />
             <span className="font-medium">View GitHub Profile</span>
             <ExternalLink className="w-4 h-4 ml-auto" />
           </a>
