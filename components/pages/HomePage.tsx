@@ -101,11 +101,11 @@ export default function HomePage() {
         <div className="grid grid-cols-3 gap-6 mb-16">
           <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700">
             <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">5+</div>
-            <div className="text-sm text-zinc-600 dark:text-zinc-400">Years of experience</div>
+            <div className="text-sm text-zinc-600 dark:text-zinc-400">Years in software engineering</div>
           </div>
           <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700">
-            <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">50+</div>
-            <div className="text-sm text-zinc-600 dark:text-zinc-400">Projects completed</div>
+            <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">8+</div>
+            <div className="text-sm text-zinc-600 dark:text-zinc-400">Real-world projects (academic, freelance & personal)</div>
           </div>
           <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700">
             <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">15+</div>
@@ -117,9 +117,7 @@ export default function HomePage() {
         <div className="bg-white dark:bg-zinc-800 rounded-xl p-8 shadow-lg border border-zinc-200 dark:border-zinc-700 mb-8">
           <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">About Me</h2>
           <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
-            Passionate about web development and artificial intelligence, I create innovative solutions 
-            that combine technical performance with exceptional user experience. Expert in React, Next.js, 
-            Node.js, and Python, I specialize in building modern and scalable applications.
+            As an early-career software engineer, I focus on AI-powered systems, LLM applications and data workflows. I work with React, Next.js, Node.js and Python to build RAG pipelines, automation workflows and web apps that turn raw data into useful products.
           </p>
         </div>
 
@@ -136,7 +134,7 @@ export default function HomePage() {
             <ExternalLink className="w-4 h-4 ml-auto" />
           </a>
           <a 
-            href="https://github.com/rudyhaddad" 
+            href="https://github.com/rudy002/" 
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 bg-zinc-800 hover:bg-zinc-900 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-white rounded-xl p-4 transition-colors shadow-lg"
