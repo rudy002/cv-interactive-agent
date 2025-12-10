@@ -1,8 +1,63 @@
 "use client";
 
-import { Linkedin, Code2, MapPin, Mail, ExternalLink } from "lucide-react";
+import { useState } from "react";
+import { Linkedin, Code2, MapPin, Mail, ExternalLink, Check } from "lucide-react";
 
 export default function HomePage() {
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  const handleEmailClick = async () => {
+    const email = "rudyhaddad.job@gmail.com";
+    const mailtoLink = `mailto:${email}?subject=Contact%20depuis%20le%20CV%20interactif&body=Bonjour%20Rudy%2C%0A%0A`;
+    
+    // Essayer d'abord d'ouvrir le client de messagerie
+    try {
+      // Créer un lien temporaire et le cliquer
+      const link = document.createElement('a');
+      link.href = mailtoLink;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Attendre un peu pour voir si le client de messagerie s'ouvre
+      setTimeout(() => {
+        // Si après 500ms rien ne s'est passé, copier l'email
+        copyEmailToClipboard(email);
+      }, 500);
+    } catch (error) {
+      // En cas d'erreur, copier l'email directement
+      copyEmailToClipboard(email);
+    }
+  };
+
+  const copyEmailToClipboard = async (email: string) => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setEmailCopied(true);
+      setTimeout(() => {
+        setEmailCopied(false);
+      }, 3000);
+    } catch (error) {
+      // Fallback pour les navigateurs qui ne supportent pas l'API Clipboard
+      const textArea = document.createElement('textarea');
+      textArea.value = email;
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        setEmailCopied(true);
+        setTimeout(() => {
+          setEmailCopied(false);
+        }, 3000);
+      } catch (err) {
+        console.error('Impossible de copier l\'email:', err);
+      }
+      document.body.removeChild(textArea);
+    }
+  };
   return (
     <div className="h-full overflow-y-auto bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950">
       <div className="max-w-4xl mx-auto px-8 py-16">
@@ -20,11 +75,24 @@ export default function HomePage() {
           <div className="flex items-center justify-center gap-4 text-zinc-500 dark:text-zinc-500">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4" />
-              <span>Paris, France</span>
+              <span>Israel</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 relative">
               <Mail className="w-4 h-4" />
-              <span>rudy@example.com</span>
+              <button
+                type="button"
+                onClick={handleEmailClick}
+                className="text-blue-600 dark:text-blue-400 hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 rounded cursor-pointer bg-transparent border-none p-0"
+                title="Cliquez pour ouvrir votre client de messagerie ou copier l'email"
+              >
+                rudyhaddad.job@gmail.com
+              </button>
+              {emailCopied && (
+                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 flex items-center gap-2 bg-green-500 text-white px-3 py-1.5 rounded-lg text-sm shadow-lg z-50 whitespace-nowrap">
+                  <Check className="w-4 h-4" />
+                  <span>copy !</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
