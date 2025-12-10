@@ -64,7 +64,7 @@ export default function HomePage() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-5xl font-bold shadow-2xl">
-            RH
+            <img src="/images/linkedin-photo.jpeg" alt="Rudy Haddad" className="w-full h-full object-cover rounded-full" />
           </div>
           <h1 className="text-5xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
             Rudy Haddad
