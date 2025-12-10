@@ -19,22 +19,57 @@ const WELCOME_MESSAGE: Message = {
 };
 
 export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
-  const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isShowingWelcome, setIsShowingWelcome] = useState(true);
   const [sessionId] = useState(() => 
     `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
   );
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Animation du message de bienvenue au chargement
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isLoading]);
+    const timer = setTimeout(() => {
+      setMessages([WELCOME_MESSAGE]);
+      setIsShowingWelcome(false);
+    }, 2000); // 2 secondes d'animation de typing
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
-    inputRef.current?.focus();
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading, isShowingWelcome]);
+
+  // Remet le focus quand isLoading devient false (après la réponse)
+  useEffect(() => {
+    if (!isLoading && !isShowingWelcome) {
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, isShowingWelcome]);
+
+  // Focus initial au montage
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
+
+  // Remet le focus après l'animation de bienvenue
+  useEffect(() => {
+    if (!isShowingWelcome) {
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isShowingWelcome]);
 
   const handleSend = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -54,6 +89,13 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
     
     setInputValue("");
     setIsLoading(true);
+    
+    // Remet le focus sur le champ de saisie après la mise à jour du DOM
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50);
+    });
 
     try {
       const response = await fetch('/api/chat', {
@@ -98,6 +140,7 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
+      // Le focus sera remis par le useEffect qui surveille isLoading
     }
   };
 
@@ -155,7 +198,7 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
               )}
             </div>
           ))}
-          {isLoading && (
+          {(isLoading || isShowingWelcome) && (
             <div className="flex gap-4 justify-start animate-in fade-in duration-300">
               <div className="w-9 h-9 rounded-full bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700 flex items-center justify-center flex-shrink-0 shadow-sm">
                 <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">RH</span>
@@ -173,7 +216,7 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
         </div>
       </div>
 
-      {messages.length === 1 && !isLoading && (
+      {messages.length === 1 && !isLoading && !isShowingWelcome && (
         <div className="px-4 pb-3">
           <div className="w-full max-w-3xl mx-auto">
             <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2.5 px-1 font-medium">
@@ -204,12 +247,13 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Ask your question..."
-              disabled={isLoading}
+              disabled={isLoading || isShowingWelcome}
               className="flex-1 bg-transparent outline-none text-foreground placeholder:text-zinc-400 dark:placeholder:text-zinc-500 text-base disabled:opacity-50"
             />
             <button
               onClick={handleSend}
-              disabled={!inputValue.trim() || isLoading}
+              onMouseDown={(e) => e.preventDefault()}
+              disabled={!inputValue.trim() || isLoading || isShowingWelcome}
               className="ml-2 p-3 rounded-xl bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-zinc-900 dark:disabled:hover:bg-zinc-100"
               title="Send"
             >
