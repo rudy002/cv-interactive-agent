@@ -34,13 +34,7 @@ const PAGES: BrowserPage[] = [
     icon: <Code2 className="w-4 h-4" />,
     keywords: ["github", "code", "project", "projects", "repositories", "repo", "open source", "development", "built", "created", "developed"],
   },
-  {
-    id: "portfolio",
-    name: "Portfolio",
-    url: "rudyhaddad.com/portfolio",
-    icon: <Briefcase className="w-4 h-4" />,
-    keywords: ["portfolio", "work", "achievements", "accomplishments", "examples", "made", "built", "created"],
-  },
+  
   {
     id: "skills",
     name: "Skills",

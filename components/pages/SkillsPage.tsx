@@ -1,80 +1,118 @@
 "use client";
 
-export default function SkillsPage() {
-  const skillCategories = [
-    {
-      title: "Frontend",
-      icon: "⚛️",
-      skills: [
-        { name: "React / Next.js", level: 95 },
-        { name: "TypeScript", level: 90 },
-        { name: "Tailwind CSS", level: 95 },
-        { name: "Vue.js", level: 75 },
-      ]
-    },
-    {
-      title: "Backend",
-      icon: "🔧",
-      skills: [
-        { name: "Node.js / Express", level: 90 },
-        { name: "Python / FastAPI", level: 85 },
-        { name: "PostgreSQL / MongoDB", level: 88 },
-        { name: "Redis / WebSocket", level: 80 },
-      ]
-    },
-    {
-      title: "Artificial Intelligence",
-      icon: "🤖",
-      skills: [
-        { name: "OpenAI / GPT", level: 92 },
-        { name: "LangChain", level: 88 },
-        { name: "TensorFlow", level: 75 },
-        { name: "RAG Systems", level: 85 },
-      ]
-    },
-    {
-      title: "DevOps & Tools",
-      icon: "🚀",
-      skills: [
-        { name: "Docker / Kubernetes", level: 82 },
-        { name: "CI/CD (GitHub Actions)", level: 85 },
-        { name: "AWS / Vercel", level: 80 },
-        { name: "Git / GitHub", level: 95 },
-      ]
-    },
-  ];
+const cardClass =
+  "bg-gradient-to-br from-white via-white to-blue-50 dark:from-zinc-900 dark:via-slate-900 dark:to-zinc-950 rounded-xl p-6 shadow border border-blue-100 dark:border-zinc-800";
 
+const categories = [
+  {
+    title: "Frontend",
+    icon: "⚛️",
+    chips: [
+      "React",
+      "Next.js (pages/app)",
+      "TypeScript",
+      "Tailwind CSS",
+      "UI libs (MUI, etc.)",
+    ],
+    note: "Builds chat UIs, faux browser panels, dashboards.",
+  },
+  {
+    title: "Backend & APIs",
+    icon: "🔧",
+    chips: [
+      "Node.js / Express",
+      "REST APIs",
+      "Webhooks",
+      "Auth (basic/JWT)",
+      "API integrations",
+    ],
+    note: "Focus on data flows, integrations, and delivery speed.",
+  },
+  {
+    title: "Data & Storage",
+    icon: "🗄️",
+    chips: [
+      "PostgreSQL",
+      "MongoDB",
+      "Supabase",
+      "Airtable",
+      "External APIs as sources",
+    ],
+    note: "From structured DBs to API-backed datasets.",
+  },
+  {
+    title: "AI & Automation",
+    icon: "🤖",
+    chips: [
+      "n8n workflows",
+      "LLM (OpenAI & others)",
+      "RAG (Pinecone)",
+      "Drive/text ingestion",
+      "Structured prompts",
+      "Tooling chatbots",
+      "Retries/error handling",
+    ],
+    note: "Agents connected to real data (CV, projects, docs).",
+  },
+  {
+    title: "DevOps & Delivery",
+    icon: "🚀",
+    chips: [
+      "Git / GitHub",
+      "Render / Vercel",
+      "Hosted n8n",
+      "Env vars & secrets",
+      "Light CI (GitHub Actions)",
+    ],
+    note: "Pragmatic deploys and environment hygiene.",
+  },
+  {
+    title: "CS & Data foundations",
+    icon: "📐",
+    chips: [
+      "Data structures / algos",
+      "Complexity",
+      "Graphs / NetworkX",
+      "pandas / notebooks",
+      "Classical ML (sklearn)",
+    ],
+    note: "Grounding for reasoning about data and performance.",
+  },
+];
+
+export default function SkillsPage() {
   return (
     <div className="h-full overflow-y-auto bg-zinc-50 dark:bg-zinc-950">
-      <div className="max-w-5xl mx-auto p-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-3">Skills</h1>
-          <p className="text-lg text-zinc-600 dark:text-zinc-400">Technologies and tools I master</p>
+      <div className="max-w-5xl mx-auto p-8 space-y-8">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-3">Skills & Tooling</h1>
+          <p className="text-lg text-zinc-600 dark:text-zinc-400">
+            Stacks, workflows et fondamentaux que j’utilise au quotidien.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {skillCategories.map((category, idx) => (
-            <div key={idx} className="bg-white dark:bg-zinc-900 rounded-xl p-6 shadow-lg border border-zinc-200 dark:border-zinc-800">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-3xl">{category.icon}</span>
-                <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{category.title}</h2>
+          {categories.map((cat) => (
+            <div key={cat.title} className={cardClass}>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-2xl">{cat.icon}</span>
+                <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">{cat.title}</h2>
               </div>
-              <div className="space-y-4">
-                {category.skills.map((skill, i) => (
-                  <div key={i}>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{skill.name}</span>
-                      <span className="text-sm font-bold text-blue-600 dark:text-blue-400">{skill.level}%</span>
-                    </div>
-                    <div className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-2">
-                      <div 
-                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-1000"
-                        style={{ width: `${skill.level}%` }}
-                      ></div>
-                    </div>
-                  </div>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {cat.chips.map((chip) => (
+                  <span
+                    key={chip}
+                    className="px-2.5 py-1 rounded-full bg-zinc-100 text-zinc-800 text-xs dark:bg-white/10 dark:text-white"
+                  >
+                    {chip}
+                  </span>
                 ))}
               </div>
+              {cat.note && (
+                <p className="text-sm text-zinc-600 dark:text-zinc-300">
+                  {cat.note}
+                </p>
+              )}
             </div>
           ))}
         </div>

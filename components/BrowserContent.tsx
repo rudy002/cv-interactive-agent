@@ -3,7 +3,7 @@
 import HomePage from "./pages/HomePage";
 import LinkedInPage from "./pages/LinkedInPage";
 import GitHubPage from "./pages/GitHubPage";
-import PortfolioPage from "./pages/PortfolioPage";
+
 import SkillsPage from "./pages/SkillsPage";
 
 interface BrowserContentProps {
@@ -18,8 +18,6 @@ export default function BrowserContent({ pageId }: BrowserContentProps) {
       return <LinkedInPage />;
     case "github":
       return <GitHubPage />;
-    case "portfolio":
-      return <PortfolioPage />;
     case "skills":
       return <SkillsPage />;
     default:
