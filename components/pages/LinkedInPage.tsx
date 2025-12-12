@@ -1,22 +1,55 @@
 "use client";
 
-import { Briefcase, Code, Calendar } from "lucide-react";
+import {
+  Briefcase,
+  Code,
+  Calendar,
+  GraduationCap,
+  Mail,
+  Github,
+  Linkedin,
+} from "lucide-react";
+import Image from "next/image";
 
 export default function LinkedInPage() {
+  const cardClass =
+    "bg-gradient-to-br from-white via-white to-blue-50 dark:from-zinc-900 dark:via-slate-900 dark:to-zinc-950 rounded-lg p-6 shadow border border-blue-100 dark:border-zinc-800";
+
   return (
     <div className="h-full overflow-y-auto bg-zinc-50 dark:bg-zinc-950">
       <div className="max-w-4xl mx-auto">
-        {/* LinkedIn-style Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 h-32"></div>
-        <div className="bg-white dark:bg-zinc-900 px-8 pt-4 pb-8 border-b border-zinc-200 dark:border-zinc-800 -mt-16">
-          <div className="flex items-end gap-6 mb-4">
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-4xl font-bold shadow-xl border-4 border-white dark:border-zinc-900">
-              RH
-            </div>
-            <div className="flex-1 mb-4">
-              <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">Rudy Haddad</h1>
-              <p className="text-lg text-zinc-700 dark:text-zinc-300">Full-Stack Developer | AI Expert | React & Node.js</p>
-              <p className="text-sm text-zinc-500 dark:text-zinc-500 mt-1">Paris, Île-de-France, France • 500+ connections</p>
+        {/* Header cover */}
+        <div className="relative rounded-b-xl overflow-hidden border-b border-zinc-200 dark:border-zinc-800 shadow-sm">
+          <div className="absolute inset-0">
+            <Image
+              src="/images/linkedin-cover.jpg"
+              alt="Cover background"
+              fill
+              sizes="100vw"
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/45 dark:from-black/25 dark:via-black/45 dark:to-black/65" />
+          </div>
+          <div className="relative px-8 pt-20 pb-8">
+            <div className="flex items-end gap-6">
+              <div className="w-32 h-32 rounded-full overflow-hidden shadow-xl ring-4 ring-white dark:ring-zinc-900 bg-zinc-200 dark:bg-zinc-800">
+                <Image
+                  src="/images/linkedin-photo.jpeg"
+                  alt="Rudy Haddad portrait"
+                  width={128}
+                  height={128}
+                  className="w-full h-full object-cover"
+                  priority
+                />
+              </div>
+              <div className="flex-1">
+                <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md rounded-xl px-4 py-3 shadow-lg border border-white/40 dark:border-white/10">
+                  <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">Rudy Haddad</h1>
+                  <p className="text-lg text-zinc-700 dark:text-zinc-200">Full-Stack Developer | AI Automation & RAG | React & Node.js</p>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-300 mt-1">Israel • 500+ connections</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -24,20 +57,94 @@ export default function LinkedInPage() {
         {/* Sections */}
         <div className="p-8 space-y-6">
           {/* About */}
-          <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow border border-zinc-200 dark:border-zinc-800">
+          <div className={cardClass}>
             <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">About</h2>
             <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
-              Passionate full-stack developer with over 5 years of experience creating modern and 
-              high-performance web applications. Specialized in the JavaScript/TypeScript ecosystem 
-              (React, Next.js, Node.js) and artificial intelligence (Python, TensorFlow, LangChain).
-              <br /><br />
-              I build innovative solutions that combine modern design, optimal performance, and artificial 
-              intelligence to deliver exceptional user experiences.
+              Early-career software engineer based in Israel, focused on AI systems, n8n automation,
+              and RAG. I build Next.js apps with agents and n8n workflows tied to real data (CV,
+              projects, recruiter FAQ) to deliver practical tools instead of static resumes. I enjoy
+              backend/data flow design and can ship frontend when it helps deliver real products.
             </p>
           </div>
 
+          {/* Roles */}
+          <div className={cardClass}>
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Roles of interest</h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="flex gap-3 items-start">
+                <div className="w-10 h-10 rounded bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">
+                  <Briefcase className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">Backend / Full-stack</p>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                    APIs, data flows, integrations. Loves designing the core logic and shipping fast.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-3 items-start">
+                <div className="w-10 h-10 rounded bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
+                  <Code className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                </div>
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">AI & Automation</p>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                    LLM, RAG, agents, n8n, structured prompts tied to real data.
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-3 items-start">
+                <div className="w-10 h-10 rounded bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
+                  <Calendar className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                </div>
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">Data / Analyst / Junior DS</p>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                    Cleaning, exploration, graphs, productionizing data-centric flows.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Skills */}
+          <div className={cardClass}>
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Key skills</h2>
+            <div className="grid md:grid-cols-2 gap-6 text-sm text-zinc-700 dark:text-zinc-300">
+              <div className="space-y-2">
+                <p className="font-semibold text-zinc-900 dark:text-zinc-100">Technical</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>Languages: Python, TypeScript/JavaScript, Java, C/C++</li>
+                  <li>Frontend: React, Next.js (pages & app router), Tailwind, MUI</li>
+                  <li>Backend & APIs: Node.js, REST, webhooks, basic auth</li>
+                  <li>DB & storage: PostgreSQL, MongoDB, Supabase, Airtable, external APIs</li>
+                  <li>Data: Jupyter, pandas, graph/network analysis (NetworkX)</li>
+                  <li>Light DevOps: Git/GitHub, simple deploys (Render, hosted n8n)</li>
+                  <li>CS fundamentals: data structures, algorithms, complexity</li>
+                </ul>
+              </div>
+              <div className="space-y-2">
+                <p className="font-semibold text-zinc-900 dark:text-zinc-100">AI & Automation</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>n8n: multi-step workflows, triggers, errors, retries, integrations</li>
+                  <li>LLM: OpenAI & others, structured prompts, tool-using agents</li>
+                  <li>RAG: Drive/text ingestion, embeddings, Pinecone, retrieval config</li>
+                  <li>Chatbots: tools via n8n (API, Drive, email, calendar)</li>
+                  <li>Classical ML: scikit-learn, regression, classification, simple clustering</li>
+                </ul>
+                <p className="font-semibold text-zinc-900 dark:text-zinc-100 pt-2">Soft skills</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>Communicates clearly with non-technical stakeholders</li>
+                  <li>Autonomous and fast learner through experimentation</li>
+                  <li>Turns vague needs into concrete workflows/products</li>
+                  <li>Collaborates and iterates quickly</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           {/* Experience */}
-          <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow border border-zinc-200 dark:border-zinc-800">
+          <div className={cardClass}>
             <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Experience</h2>
             <div className="space-y-6">
               <div className="flex gap-4">
@@ -45,56 +152,198 @@ export default function LinkedInPage() {
                   <Briefcase className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-bold text-zinc-900 dark:text-zinc-100">Lead Full-Stack Developer</h3>
-                  <p className="text-zinc-600 dark:text-zinc-400">TechCorp • Paris</p>
+                  <h3 className="font-bold text-zinc-900 dark:text-zinc-100">Freelance Software & AI Automation Developer</h3>
+                  <p className="text-zinc-600 dark:text-zinc-400">Self-employed • Israel (remote)</p>
                   <p className="text-sm text-zinc-500 dark:text-zinc-500 flex items-center gap-1 mt-1">
                     <Calendar className="w-3 h-3" />
-                    Jan 2022 - Present • 3 years
+                    Aug 2024 - Present
                   </p>
-                  <p className="text-sm text-zinc-700 dark:text-zinc-300 mt-2">
-                    Technical leadership and development of React/Next.js applications. 
-                    Integration of conversational AI and performance optimization.
-                  </p>
+                  <ul className="text-sm text-zinc-700 dark:text-zinc-300 mt-2 space-y-1 list-disc pl-4">
+                    <li>Landing/event sites with React/Next.js/Tailwind.</li>
+                    <li>AI agents for clients: n8n + LLM + external services.</li>
+                    <li>End-to-end ownership: needs, solution, deployment, maintenance.</li>
+                    <li>Practical ops: hosting, env vars, light monitoring.</li>
+                  </ul>
+                </div>
+              </div>
                 </div>
               </div>
 
-              <div className="flex gap-4">
-                <div className="w-12 h-12 rounded bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center flex-shrink-0">
-                  <Code className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+          {/* Projects */}
+          <div className={cardClass}>
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Projects</h2>
+            <div className="space-y-6 text-sm text-zinc-700 dark:text-zinc-300">
+              <div className="rounded-xl border border-blue-100 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="font-semibold text-zinc-900 dark:text-zinc-100">SurveyFlow</p>
+                    <p className="text-zinc-600 dark:text-zinc-400">Dynamic survey platform with graph builder</p>
+                    <div className="flex flex-wrap gap-2 mt-2 text-xs">
+                      <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200">React Flow</span>
+                      <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">Next.js</span>
+                      <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200">Node/Express</span>
+                      <span className="px-2 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-200">MongoDB</span>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 text-xs">
+                    <a className="px-3 py-1 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition" href="https://surveyflow.co" target="_blank" rel="noreferrer">Live</a>
+                    <a className="px-3 py-1 rounded-full bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-white/10 dark:text-white dark:hover:bg-white/20 transition" href="https://github.com/joey603/SurveyPro" target="_blank" rel="noreferrer">GitHub</a>
+                    <a className="px-3 py-1 rounded-full bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-white/10 dark:text-white dark:hover:bg-white/20 transition" href="https://github.com/rudy002/SurveyPro" target="_blank" rel="noreferrer">Fork</a>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-bold text-zinc-900 dark:text-zinc-100">Full-Stack Developer</h3>
-                  <p className="text-zinc-600 dark:text-zinc-400">StartupXYZ • Paris</p>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-500 flex items-center gap-1 mt-1">
-                    <Calendar className="w-3 h-3" />
-                    Jan 2020 - Dec 2021 • 2 years
-                  </p>
-                  <p className="text-sm text-zinc-700 dark:text-zinc-300 mt-2">
-                    Development of modern web applications with React, TypeScript, and Node.js.
-                    Implementation of microservices architecture.
-                  </p>
+                <ul className="list-disc pl-4 mt-3 space-y-1">
+                  <li>Node/edge survey builder, JWT auth, REST API, conditional paths.</li>
+                  <li>Deployed: Render (backend) + Vercel (frontend), Cloudinary, SendGrid.</li>
+                  <li>Full-stack features, external integrations, deployment docs.</li>
+                </ul>
+              </div>
+
+              <div className="rounded-xl border border-blue-100 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="font-semibold text-zinc-900 dark:text-zinc-100">AI-Powered Interactive Portfolio</p>
+                    <p className="text-zinc-600 dark:text-zinc-400">Chat over CV/projects with faux browser</p>
+                    <div className="flex flex-wrap gap-2 mt-2 text-xs">
+                      <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">Next.js</span>
+                      <span className="px-2 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-200">n8n</span>
+                      <span className="px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-200">RAG</span>
+                      <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200">OpenAI + Pinecone</span>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 text-xs">
+                    <a className="px-3 py-1 rounded-full bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-white/10 dark:text-white dark:hover:bg-white/20 transition" href="https://github.com/rudy002/cv-interactive-agent.git" target="_blank" rel="noreferrer">GitHub</a>
+                  </div>
                 </div>
+                <ul className="list-disc pl-4 mt-3 space-y-1">
+                  <li>Ingestion/update/chat workflows (Drive/text), structured prompts, separation instructions/knowledge.</li>
+                  <li>Fake browser side-panel to surface GitHub/LinkedIn/project pages.</li>
+                  <li>Multi-language answers based on user language.</li>
+                </ul>
+              </div>
+
+              <div className="rounded-xl border border-blue-100 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="font-semibold text-zinc-900 dark:text-zinc-100">Shavtsak – Guard duty planner</p>
+                    <p className="text-zinc-600 dark:text-zinc-400">Scheduling tool for fair guard shifts</p>
+                    <div className="flex flex-wrap gap-2 mt-2 text-xs">
+                      <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">React</span>
+                      <span className="px-2 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-200">Vite</span>
+                      <span className="px-2 py-1 rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200">Client-side</span>
+                    </div>
+                  </div>
+                </div>
+                <ul className="list-disc pl-4 mt-3 space-y-1">
+                  <li>Posts/slots management, automatic assignment, avoids back-to-back shifts.</li>
+                  <li>Built for simple field use; roadmap: constraints, export, roles.</li>
+                </ul>
               </div>
             </div>
           </div>
 
-          {/* Education */}
-          <div className="bg-white dark:bg-zinc-900 rounded-lg p-6 shadow border border-zinc-200 dark:border-zinc-800">
-            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Education</h2>
-            <div className="flex gap-4">
-              <div className="w-12 h-12 rounded bg-green-100 dark:bg-green-900/20 flex items-center justify-center flex-shrink-0">
-                <span className="text-2xl">🎓</span>
+          {/* Education & Certs */}
+          <div className={cardClass}>
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Education & Certifications</h2>
+            <div className="space-y-4">
+              <div className="flex gap-3 items-center">
+                <div className="w-12 h-12 rounded bg-green-100 dark:bg-green-900/20 flex items-center justify-center overflow-hidden">
+                  <Image
+                    src="/images/sce-logo.png"
+                    alt="Shamoon College of Engineering (SCE) logo"
+                    width={48}
+                    height={48}
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">BSc Software Engineering – Shamoon College of Engineering (SCE)</p>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">2020 – 2025 | Ashdod, Israel</p>
+                  <p className="text-sm text-zinc-700 dark:text-zinc-300">Software eng, algorithms/structures, DB, OS, networks, ML.</p>
+                </div>
               </div>
-              <div className="flex-1">
-                <h3 className="font-bold text-zinc-900 dark:text-zinc-100">Master's in Computer Science</h3>
-                <p className="text-zinc-600 dark:text-zinc-400">Paris Diderot University</p>
-                <p className="text-sm text-zinc-500 dark:text-zinc-500">2017 - 2019</p>
+              <div className="pl-1 space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
+                <p className="font-semibold text-zinc-900 dark:text-zinc-100">Certifications</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>AI Automation with n8n & APIs (Udemy 2024) – workflows, RAG, errors, integrations.</li>
+                  <li>Complete SQL Bootcamp (Udemy 2025) – queries, joins, aggregations, schemas.</li>
+                  <li>Neural Networks and Deep Learning (Coursera 2023) – NN foundations, BP, regularization.</li>
+                </ul>
               </div>
             </div>
           </div>
+
+          {/* Contact */}
+          <div className="bg-gradient-to-r from-blue-50 via-white to-blue-50 dark:from-zinc-900 dark:via-slate-900 dark:to-zinc-800 text-zinc-900 dark:text-white rounded-lg p-6 shadow-lg border border-blue-100 dark:border-zinc-800">
+            <div className="flex items-center justify-between gap-2 mb-4">
+              <div>
+                <h2 className="text-xl font-bold">Availability & Contact</h2>
+                <p className="text-sm text-zinc-600 dark:text-zinc-200">Based in Israel (UTC+2) • Open to remote</p>
+              </div>
+              <div className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full border border-blue-200 dark:bg-white/10 dark:text-white dark:border-white/10">
+                Actively exploring junior roles
+              </div>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3 text-sm">
+              <div className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3">
+                <Calendar className="w-5 h-5 text-amber-500 dark:text-amber-300" />
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-white">Roles</p>
+                  <p className="text-zinc-700 dark:text-zinc-200">Backend / Full-stack • AI/Automation • Data</p>
+                </div>
+              </div>
+              <a
+                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 hover:bg-white dark:hover:bg-white/10 transition"
+                href="mailto:rudyhaddad.job@gmail.com"
+              >
+                <Mail className="w-5 h-5 text-amber-500 dark:text-amber-300" />
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-white">Email</p>
+                  <p className="text-zinc-700 dark:text-zinc-200">rudyhaddad.job@gmail.com</p>
+                </div>
+              </a>
+              <a
+                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 hover:bg-white dark:hover:bg-white/10 transition"
+                href="https://www.linkedin.com/in/rudy-haddad/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Linkedin className="w-5 h-5 text-sky-600 dark:text-sky-300" />
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-white">LinkedIn</p>
+                  <p className="text-zinc-700 dark:text-zinc-200">linkedin.com/in/rudy-haddad</p>
+                </div>
+              </a>
+              <a
+                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 hover:bg-white dark:hover:bg-white/10 transition"
+                href="https://github.com/rudy002"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Github className="w-5 h-5 text-emerald-600 dark:text-emerald-300" />
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-white">GitHub</p>
+                  <p className="text-zinc-700 dark:text-zinc-200">github.com/rudy002</p>
+                </div>
+              </a>
+              <a
+                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 hover:bg-white dark:hover:bg-white/10 transition"
+                href="https://leetcode.com/u/rudy0202/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Code className="w-5 h-5 text-indigo-600 dark:text-indigo-300" />
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-white">LeetCode</p>
+                  <p className="text-zinc-700 dark:text-zinc-200">leetcode.com/u/rudy0202</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          {/* Background & Interests */}
         </div>
       </div>
     </div>
   );
 }
-
