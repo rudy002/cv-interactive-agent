@@ -59,8 +59,8 @@ export default function HomePage() {
     }
   };
   return (
-    <div className="h-full overflow-y-auto bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <div className="h-full overflow-y-auto bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950 scroll-smooth">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">
           <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-5xl font-bold shadow-2xl">
@@ -98,18 +98,18 @@ export default function HomePage() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-16">
-          <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700">
-            <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">5+</div>
-            <div className="text-sm text-zinc-600 dark:text-zinc-400">Years in software engineering</div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
+          <div className="bg-white dark:bg-zinc-800 rounded-xl p-5 sm:p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700 active:scale-[0.98] transition-transform">
+            <div className="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">5+</div>
+            <div className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">Years in software engineering</div>
           </div>
-          <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700">
-            <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">8+</div>
-            <div className="text-sm text-zinc-600 dark:text-zinc-400">Real-world projects (academic, freelance & personal)</div>
+          <div className="bg-white dark:bg-zinc-800 rounded-xl p-5 sm:p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700 active:scale-[0.98] transition-transform">
+            <div className="text-3xl sm:text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">8+</div>
+            <div className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">Real-world projects (academic, freelance & personal)</div>
           </div>
-          <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700">
-            <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">15+</div>
-            <div className="text-sm text-zinc-600 dark:text-zinc-400">Technologies mastered</div>
+          <div className="bg-white dark:bg-zinc-800 rounded-xl p-5 sm:p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700 active:scale-[0.98] transition-transform">
+            <div className="text-3xl sm:text-4xl font-bold text-green-600 dark:text-green-400 mb-2">15+</div>
+            <div className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">Technologies mastered</div>
           </div>
         </div>
 
@@ -122,26 +122,26 @@ export default function HomePage() {
         </div>
 
         {/* Quick Links */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <a 
             href="https://linkedin.com/in/rudy-haddad" 
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl p-4 transition-colors shadow-lg"
+            className="flex items-center gap-3 bg-blue-600 active:bg-blue-700 hover:bg-blue-700 text-white rounded-xl p-4 sm:p-4 transition-all shadow-lg active:scale-[0.98] touch-manipulation min-h-[56px]"
           >
-            <Linkedin className="w-5 h-5" />
-            <span className="font-medium">View LinkedIn Profile</span>
-            <ExternalLink className="w-4 h-4 ml-auto" />
+            <Linkedin className="w-5 h-5 flex-shrink-0" />
+            <span className="font-medium text-sm sm:text-base">View LinkedIn Profile</span>
+            <ExternalLink className="w-4 h-4 ml-auto flex-shrink-0" />
           </a>
           <a 
             href="https://github.com/rudy002/" 
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 bg-zinc-800 hover:bg-zinc-900 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-white rounded-xl p-4 transition-colors shadow-lg"
+            className="flex items-center gap-3 bg-zinc-800 active:bg-zinc-900 hover:bg-zinc-900 dark:bg-zinc-700 dark:active:bg-zinc-600 dark:hover:bg-zinc-600 text-white rounded-xl p-4 sm:p-4 transition-all shadow-lg active:scale-[0.98] touch-manipulation min-h-[56px]"
           >
-            <Code2 className="w-5 h-5" />
-            <span className="font-medium">View GitHub Profile</span>
-            <ExternalLink className="w-4 h-4 ml-auto" />
+            <Code2 className="w-5 h-5 flex-shrink-0" />
+            <span className="font-medium text-sm sm:text-base">View GitHub Profile</span>
+            <ExternalLink className="w-4 h-4 ml-auto flex-shrink-0" />
           </a>
         </div>
       </div>

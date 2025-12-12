@@ -312,26 +312,26 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
 
   return (
     <div className="flex flex-col h-full w-full bg-gradient-to-b from-white via-zinc-50 to-white dark:from-black dark:via-zinc-950 dark:to-black">
-      <div className="w-full max-w-3xl mx-auto px-4 pt-5 pb-3">
-        <div className="rounded-2xl border border-zinc-200/70 dark:border-zinc-800 bg-white/85 dark:bg-zinc-900/80 backdrop-blur-md shadow-lg px-4 py-3 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center shadow-md">
-              <Bot className="w-5 h-5" />
+      <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-4 sm:pt-5 pb-2 sm:pb-3">
+        <div className="rounded-2xl border border-zinc-200/70 dark:border-zinc-800 bg-white/85 dark:bg-zinc-900/80 backdrop-blur-md shadow-lg px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center shadow-md flex-shrink-0">
+              <Bot className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Rudy’s Assistant</p>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">Clear, concise answers</p>
+            <div className="min-w-0">
+              <p className="text-xs sm:text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate">Rudy's Assistant</p>
+              <p className="text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 truncate">Clear, concise answers</p>
             </div>
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-blue-600 dark:text-blue-300 font-semibold px-2 py-1 rounded-full bg-blue-50/80 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Live chat</span>
+          <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-blue-600 dark:text-blue-300 font-semibold px-2 py-1 rounded-full bg-blue-50/80 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 flex-shrink-0">
+            <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+            <span className="hidden sm:inline">Live chat</span>
           </div>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto scroll-smooth">
-        <div className="w-full max-w-3xl mx-auto px-4 pb-6 space-y-6">
+        <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pb-4 sm:pb-6 space-y-4 sm:space-y-6">
           {messages.map((message) => (
             <div
               key={message.id}
@@ -345,7 +345,7 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
                 </div>
               )}
               <div
-                className={`max-w-[80%] rounded-2xl px-5 py-3.5 shadow-md ${
+                className={`max-w-[85%] sm:max-w-[80%] rounded-2xl px-4 sm:px-5 py-3 sm:py-3.5 shadow-md ${
                   message.role === "user"
                     ? "bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-700 text-white dark:from-zinc-100 dark:via-zinc-200 dark:to-white dark:text-zinc-900 border border-zinc-800/70"
                     : "bg-white text-zinc-900 dark:bg-zinc-900/90 dark:text-zinc-50 border border-zinc-200 dark:border-zinc-800/80"
@@ -381,9 +381,9 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
       </div>
 
       {messages.length === 1 && !isLoading && !isShowingWelcome && (
-        <div className="px-4 pb-3">
+        <div className="px-3 sm:px-4 pb-2 sm:pb-3">
           <div className="w-full max-w-3xl mx-auto">
-            <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2.5 px-1 font-medium">
+            <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mb-2 sm:mb-2.5 px-1 font-medium">
               Suggestions:
             </p>
             <div className="flex flex-wrap gap-2">
@@ -391,7 +391,7 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
                 <button
                   key={index}
                   onClick={() => handleSuggestionClick(suggestion)}
-                  className="px-4 py-2.5 text-sm rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors border border-zinc-200 dark:border-zinc-700"
+                  className="px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 active:bg-zinc-200 dark:active:bg-zinc-700 transition-all border border-zinc-200 dark:border-zinc-700 active:scale-[0.98] touch-manipulation min-h-[40px]"
                 >
                   {suggestion}
                 </button>
@@ -401,9 +401,9 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
         </div>
       )}
 
-      <div className="flex items-center justify-center px-4 pb-6 pt-4 border-t border-zinc-100 dark:border-zinc-800 bg-white/50 dark:bg-black/50 backdrop-blur-sm">
+      <div className="flex items-center justify-center px-3 sm:px-4 pb-4 sm:pb-6 pt-3 sm:pt-4 border-t border-zinc-100 dark:border-zinc-800 bg-white/50 dark:bg-black/50 backdrop-blur-sm safe-area-inset-bottom">
         <div className="w-full max-w-3xl">
-          <div className="relative flex items-center rounded-2xl border-2 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-lg dark:shadow-zinc-900/50 px-4 py-3 focus-within:border-zinc-400 dark:focus-within:border-zinc-600 transition-colors">
+          <div className="relative flex items-center rounded-2xl border-2 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-lg dark:shadow-zinc-900/50 px-3 sm:px-4 py-2.5 sm:py-3 focus-within:border-zinc-400 dark:focus-within:border-zinc-600 transition-colors">
             <input
               ref={inputRef}
               type="text"
@@ -412,17 +412,17 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
               onKeyPress={handleKeyPress}
               placeholder="Ask your question..."
               disabled={isLoading || isShowingWelcome}
-              className="flex-1 bg-transparent outline-none text-foreground placeholder:text-zinc-400 dark:placeholder:text-zinc-500 text-base disabled:opacity-50"
+              className="flex-1 bg-transparent outline-none text-foreground placeholder:text-zinc-400 dark:placeholder:text-zinc-500 text-sm sm:text-base disabled:opacity-50"
             />
             <button
               onClick={handleSend}
               onMouseDown={(e) => e.preventDefault()}
               disabled={!inputValue.trim() || isLoading || isShowingWelcome}
-              className="ml-2 p-3 rounded-xl bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-zinc-900 dark:disabled:hover:bg-zinc-100"
+              className="ml-2 p-2.5 sm:p-3 rounded-xl bg-zinc-900 dark:bg-zinc-100 active:bg-zinc-800 dark:active:bg-zinc-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:active:bg-zinc-900 dark:disabled:active:bg-zinc-100 touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
               title="Send"
             >
               <svg
-                className="w-5 h-5 text-white dark:text-zinc-900"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-white dark:text-zinc-900"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -436,7 +436,7 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
               </svg>
             </button>
           </div>
-          <p className="text-sm text-zinc-400 dark:text-zinc-600 mt-2.5 text-center">
+          <p className="text-xs sm:text-sm text-zinc-400 dark:text-zinc-600 mt-2 sm:mt-2.5 text-center">
             Powered by AI • Up-to-date data
           </p>
         </div>

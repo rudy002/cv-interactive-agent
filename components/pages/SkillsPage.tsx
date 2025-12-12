@@ -82,34 +82,34 @@ const categories = [
 
 export default function SkillsPage() {
   return (
-    <div className="h-full overflow-y-auto bg-zinc-50 dark:bg-zinc-950">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="h-full overflow-y-auto bg-zinc-50 dark:bg-zinc-950 scroll-smooth">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
         <div className="text-center">
-          <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-3">Skills & Tooling</h1>
-          <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400">
-            Stacks, workflows et fondamentaux que j’utilise au quotidien.
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-2 sm:mb-3">Skills & Tooling</h1>
+          <p className="text-sm sm:text-base lg:text-lg text-zinc-600 dark:text-zinc-400 px-2">
+            Stacks, workflows et fondamentaux que j'utilise au quotidien.
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
           {categories.map((cat) => (
-            <div key={cat.title} className={cardClass}>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">{cat.icon}</span>
-                <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">{cat.title}</h2>
+            <div key={cat.title} className={`${cardClass} p-4 sm:p-6`}>
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <span className="text-xl sm:text-2xl">{cat.icon}</span>
+                <h2 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100">{cat.title}</h2>
               </div>
-              <div className="flex flex-wrap gap-2 mb-3">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-2 sm:mb-3">
                 {cat.chips.map((chip) => (
                   <span
                     key={chip}
-                    className="px-2.5 py-1 rounded-full bg-zinc-100 text-zinc-800 text-xs dark:bg-white/10 dark:text-white"
+                    className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-zinc-100 text-zinc-800 text-xs dark:bg-white/10 dark:text-white"
                   >
                     {chip}
                   </span>
                 ))}
               </div>
               {cat.note && (
-                <p className="text-sm text-zinc-600 dark:text-zinc-300">
+                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300">
                   {cat.note}
                 </p>
               )}

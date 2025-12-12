@@ -16,7 +16,7 @@ export default function LinkedInPage() {
     "bg-gradient-to-br from-white via-white to-blue-50 dark:from-zinc-900 dark:via-slate-900 dark:to-zinc-950 rounded-lg p-6 shadow border border-blue-100 dark:border-zinc-800";
 
   return (
-    <div className="h-full overflow-y-auto bg-zinc-50 dark:bg-zinc-950">
+    <div className="h-full overflow-y-auto bg-zinc-50 dark:bg-zinc-950 scroll-smooth">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Header cover */}
         <div className="relative rounded-b-xl overflow-hidden border-b border-zinc-200 dark:border-zinc-800 shadow-sm">
@@ -31,9 +31,9 @@ export default function LinkedInPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/45 dark:from-black/25 dark:via-black/45 dark:to-black/65" />
           </div>
-          <div className="relative px-8 pt-20 pb-8">
-            <div className="flex flex-col sm:flex-row sm:items-end gap-6">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden shadow-xl ring-4 ring-white dark:ring-zinc-900 bg-zinc-200 dark:bg-zinc-800 mx-auto sm:mx-0">
+          <div className="relative px-4 sm:px-8 pt-16 sm:pt-20 pb-6 sm:pb-8">
+            <div className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6">
+              <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden shadow-xl ring-4 ring-white dark:ring-zinc-900 bg-zinc-200 dark:bg-zinc-800 mx-auto sm:mx-0 flex-shrink-0">
                 <Image
                   src="/images/linkedin-photo.jpeg"
                   alt="Rudy Haddad portrait"
@@ -43,11 +43,11 @@ export default function LinkedInPage() {
                   priority
                 />
               </div>
-              <div className="flex-1">
-                <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md rounded-xl px-4 py-3 shadow-lg border border-white/40 dark:border-white/10">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100">Rudy Haddad</h1>
-                  <p className="text-base sm:text-lg text-zinc-700 dark:text-zinc-200">Full-Stack Developer | AI Automation & RAG | React & Node.js</p>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-300 mt-1">Israel • 500+ connections</p>
+              <div className="flex-1 min-w-0">
+                <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 shadow-lg border border-white/40 dark:border-white/10">
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-zinc-900 dark:text-zinc-100 break-words">Rudy Haddad</h1>
+                  <p className="text-sm sm:text-base lg:text-lg text-zinc-700 dark:text-zinc-200 break-words">Full-Stack Developer | AI Automation & RAG | React & Node.js</p>
+                  <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 mt-1">Israel • 500+ connections</p>
                 </div>
               </div>
             </div>
@@ -55,7 +55,7 @@ export default function LinkedInPage() {
         </div>
 
         {/* Sections */}
-        <div className="px-4 sm:px-8 py-8 space-y-6">
+        <div className="px-4 sm:px-8 py-6 sm:py-8 space-y-5 sm:space-y-6">
           {/* About */}
           <div className={cardClass}>
             <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">About</h2>
@@ -109,31 +109,31 @@ export default function LinkedInPage() {
 
           {/* Skills */}
           <div className={cardClass}>
-            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Skills & Tooling</h2>
-            <div className="grid md:grid-cols-2 gap-4 text-sm">
+            <h2 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-3 sm:mb-4">Skills & Tooling</h2>
+            <div className="grid md:grid-cols-2 gap-3 sm:gap-4 text-sm">
               <div className="rounded-xl border border-blue-100 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 shadow-sm space-y-3">
                 <div>
                   <p className="font-semibold text-zinc-900 dark:text-zinc-100">Technical</p>
                   <p className="text-zinc-600 dark:text-zinc-300 text-xs">Stack & core engineering</p>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">Python</span>
-                  <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200">TypeScript/JS</span>
-                  <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200">Java</span>
-                  <span className="px-2 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-200">C/C++</span>
-                  <span className="px-2 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-200">React/Next.js</span>
-                  <span className="px-2 py-1 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-200">Tailwind/MUI</span>
-                  <span className="px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-200">Node.js/REST</span>
-                  <span className="px-2 py-1 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-200">Webhooks/Auth</span>
-                  <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200">PostgreSQL</span>
-                  <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">MongoDB</span>
-                  <span className="px-2 py-1 rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-200">Supabase/Airtable</span>
-                  <span className="px-2 py-1 rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200">APIs externes</span>
-                  <span className="px-2 py-1 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-200">pandas/Jupyter</span>
-                  <span className="px-2 py-1 rounded-full bg-lime-100 text-lime-700 dark:bg-lime-900/30 dark:text-lime-200">NetworkX/graphs</span>
-                  <span className="px-2 py-1 rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-200">CS fundamentals</span>
-                  <span className="px-2 py-1 rounded-full bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-200">Git/GitHub</span>
-                  <span className="px-2 py-1 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-200">Render/n8n deploys</span>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200 text-xs sm:text-sm">Python</span>
+                  <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200 text-xs sm:text-sm">TypeScript/JS</span>
+                  <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200 text-xs sm:text-sm">Java</span>
+                  <span className="px-2 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-200 text-xs sm:text-sm">C/C++</span>
+                  <span className="px-2 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-200 text-xs sm:text-sm">React/Next.js</span>
+                  <span className="px-2 py-1 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-200 text-xs sm:text-sm">Tailwind/MUI</span>
+                  <span className="px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-200 text-xs sm:text-sm">Node.js/REST</span>
+                  <span className="px-2 py-1 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-200 text-xs sm:text-sm">Webhooks/Auth</span>
+                  <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200 text-xs sm:text-sm">PostgreSQL</span>
+                  <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200 text-xs sm:text-sm">MongoDB</span>
+                  <span className="px-2 py-1 rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-200 text-xs sm:text-sm">Supabase/Airtable</span>
+                  <span className="px-2 py-1 rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200 text-xs sm:text-sm">APIs externes</span>
+                  <span className="px-2 py-1 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-200 text-xs sm:text-sm">pandas/Jupyter</span>
+                  <span className="px-2 py-1 rounded-full bg-lime-100 text-lime-700 dark:bg-lime-900/30 dark:text-lime-200 text-xs sm:text-sm">NetworkX/graphs</span>
+                  <span className="px-2 py-1 rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-200 text-xs sm:text-sm">CS fundamentals</span>
+                  <span className="px-2 py-1 rounded-full bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-200 text-xs sm:text-sm">Git/GitHub</span>
+                  <span className="px-2 py-1 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-200 text-xs sm:text-sm">Render/n8n deploys</span>
                 </div>
               </div>
               <div className="rounded-xl border border-blue-100 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 shadow-sm space-y-3">
@@ -141,24 +141,24 @@ export default function LinkedInPage() {
                   <p className="font-semibold text-zinc-900 dark:text-zinc-100">AI & Automation</p>
                   <p className="text-zinc-600 dark:text-zinc-300 text-xs">LLM, RAG, workflows</p>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-2 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-200">n8n workflows</span>
-                  <span className="px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-200">OpenAI & LLMs</span>
-                  <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200">RAG (Pinecone)</span>
-                  <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">Drive ingestion</span>
-                  <span className="px-2 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-200">Structured prompts</span>
-                  <span className="px-2 py-1 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-200">Tool-using agents</span>
-                  <span className="px-2 py-1 rounded-full bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-200">Tooling chatbots (APIs, SaaS, data sources)</span>
-                  <span className="px-2 py-1 rounded-full bg-lime-100 text-lime-700 dark:bg-lime-900/30 dark:text-lime-200">Retries/error handling</span>
-                  <span className="px-2 py-1 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-200">Classical ML</span>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  <span className="px-2 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-200 text-xs sm:text-sm">n8n workflows</span>
+                  <span className="px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-200 text-xs sm:text-sm">OpenAI & LLMs</span>
+                  <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200 text-xs sm:text-sm">RAG (Pinecone)</span>
+                  <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200 text-xs sm:text-sm">Drive ingestion</span>
+                  <span className="px-2 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-200 text-xs sm:text-sm">Structured prompts</span>
+                  <span className="px-2 py-1 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-200 text-xs sm:text-sm">Tool-using agents</span>
+                  <span className="px-2 py-1 rounded-full bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-200 text-xs sm:text-sm">Tooling chatbots (APIs, SaaS, data sources)</span>
+                  <span className="px-2 py-1 rounded-full bg-lime-100 text-lime-700 dark:bg-lime-900/30 dark:text-lime-200 text-xs sm:text-sm">Retries/error handling</span>
+                  <span className="px-2 py-1 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-200 text-xs sm:text-sm">Classical ML</span>
                 </div>
                 <div className="pt-1">
-                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">Soft skills</p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    <span className="px-2 py-1 rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200">Clear communication</span>
-                    <span className="px-2 py-1 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200">Autonomous learner</span>
-                    <span className="px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">Problem solving</span>
-                    <span className="px-2 py-1 rounded-full bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200">Collaboration</span>
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100 text-sm sm:text-base">Soft skills</p>
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2">
+                    <span className="px-2 py-1 rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200 text-xs sm:text-sm">Clear communication</span>
+                    <span className="px-2 py-1 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200 text-xs sm:text-sm">Autonomous learner</span>
+                    <span className="px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200 text-xs sm:text-sm">Problem solving</span>
+                    <span className="px-2 py-1 rounded-full bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200 text-xs sm:text-sm">Collaboration</span>
                   </div>
                 </div>
               </div>
@@ -319,57 +319,57 @@ export default function LinkedInPage() {
               </div>
             </div>
             <div className="grid sm:grid-cols-2 gap-3 text-sm">
-              <div className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3">
-                <Calendar className="w-5 h-5 text-amber-500 dark:text-amber-300" />
-                <div>
-                  <p className="font-semibold text-zinc-900 dark:text-white">Roles</p>
-                  <p className="text-zinc-700 dark:text-zinc-200">Backend / Full-stack • AI/Automation • Data</p>
+              <div className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 min-h-[56px]">
+                <Calendar className="w-5 h-5 text-amber-500 dark:text-amber-300 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="font-semibold text-zinc-900 dark:text-white text-xs sm:text-sm">Roles</p>
+                  <p className="text-zinc-700 dark:text-zinc-200 text-xs sm:text-sm break-words">Backend / Full-stack • AI/Automation • Data</p>
                 </div>
               </div>
               <a
-                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 hover:bg-white dark:hover:bg-white/10 transition"
+                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 active:bg-white dark:active:bg-white/10 transition active:scale-[0.98] touch-manipulation min-h-[56px]"
                 href="mailto:rudyhaddad.job@gmail.com"
               >
-                <Mail className="w-5 h-5 text-amber-500 dark:text-amber-300" />
-                <div>
-                  <p className="font-semibold text-zinc-900 dark:text-white">Email</p>
-                  <p className="text-zinc-700 dark:text-zinc-200">rudyhaddad.job@gmail.com</p>
+                <Mail className="w-5 h-5 text-amber-500 dark:text-amber-300 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="font-semibold text-zinc-900 dark:text-white text-xs sm:text-sm">Email</p>
+                  <p className="text-zinc-700 dark:text-zinc-200 text-xs sm:text-sm break-all">rudyhaddad.job@gmail.com</p>
                 </div>
               </a>
               <a
-                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 hover:bg-white dark:hover:bg-white/10 transition"
+                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 active:bg-white dark:active:bg-white/10 transition active:scale-[0.98] touch-manipulation min-h-[56px]"
                 href="https://www.linkedin.com/in/rudy-haddad/"
                 target="_blank"
                 rel="noreferrer"
               >
-                <Linkedin className="w-5 h-5 text-sky-600 dark:text-sky-300" />
-                <div>
-                  <p className="font-semibold text-zinc-900 dark:text-white">LinkedIn</p>
-                  <p className="text-zinc-700 dark:text-zinc-200">linkedin.com/in/rudy-haddad</p>
+                <Linkedin className="w-5 h-5 text-sky-600 dark:text-sky-300 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="font-semibold text-zinc-900 dark:text-white text-xs sm:text-sm">LinkedIn</p>
+                  <p className="text-zinc-700 dark:text-zinc-200 text-xs sm:text-sm break-all">linkedin.com/in/rudy-haddad</p>
                 </div>
               </a>
               <a
-                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 hover:bg-white dark:hover:bg-white/10 transition"
+                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 active:bg-white dark:active:bg-white/10 transition active:scale-[0.98] touch-manipulation min-h-[56px]"
                 href="https://github.com/rudy002"
                 target="_blank"
                 rel="noreferrer"
               >
-                <Github className="w-5 h-5 text-emerald-600 dark:text-emerald-300" />
-                <div>
-                  <p className="font-semibold text-zinc-900 dark:text-white">GitHub</p>
-                  <p className="text-zinc-700 dark:text-zinc-200">github.com/rudy002</p>
+                <Github className="w-5 h-5 text-emerald-600 dark:text-emerald-300 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="font-semibold text-zinc-900 dark:text-white text-xs sm:text-sm">GitHub</p>
+                  <p className="text-zinc-700 dark:text-zinc-200 text-xs sm:text-sm break-all">github.com/rudy002</p>
                 </div>
               </a>
               <a
-                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 hover:bg-white dark:hover:bg-white/10 transition"
+                className="bg-white/70 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg p-3 flex items-center gap-3 active:bg-white dark:active:bg-white/10 transition active:scale-[0.98] touch-manipulation min-h-[56px]"
                 href="https://leetcode.com/u/rudy0202/"
                 target="_blank"
                 rel="noreferrer"
               >
-                <Code className="w-5 h-5 text-indigo-600 dark:text-indigo-300" />
-                <div>
-                  <p className="font-semibold text-zinc-900 dark:text-white">LeetCode</p>
-                  <p className="text-zinc-700 dark:text-zinc-200">leetcode.com/u/rudy0202</p>
+                <Code className="w-5 h-5 text-indigo-600 dark:text-indigo-300 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="font-semibold text-zinc-900 dark:text-white text-xs sm:text-sm">LeetCode</p>
+                  <p className="text-zinc-700 dark:text-zinc-200 text-xs sm:text-sm break-all">leetcode.com/u/rudy0202</p>
                 </div>
               </a>
             </div>

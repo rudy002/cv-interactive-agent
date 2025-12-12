@@ -35,13 +35,13 @@ const cardClass =
 
 export default function GitHubPage() {
   return (
-    <div className="h-full overflow-y-auto bg-zinc-50 dark:bg-zinc-950">
-      <div className="max-w-5xl mx-auto p-6 sm:p-8 space-y-6">
+    <div className="h-full overflow-y-auto bg-zinc-50 dark:bg-zinc-950 scroll-smooth">
+      <div className="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6">
         {/* Profile Header */}
         <div className="relative rounded-2xl overflow-hidden border border-blue-100 dark:border-zinc-800 shadow-lg">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-emerald-500/20 dark:from-blue-900/30 dark:via-purple-900/30 dark:to-emerald-900/30" />
-          <div className="relative p-6 sm:p-8 flex flex-col sm:flex-row items-start gap-6">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-xl ring-4 ring-white dark:ring-zinc-900 bg-zinc-200 dark:bg-zinc-800 mx-auto sm:mx-0">
+          <div className="relative p-4 sm:p-6 lg:p-8 flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full overflow-hidden shadow-xl ring-4 ring-white dark:ring-zinc-900 bg-zinc-200 dark:bg-zinc-800 mx-auto sm:mx-0 flex-shrink-0">
               <Image
                 src="/images/linkedin-photo.jpeg"
                 alt="Rudy Haddad avatar"
@@ -51,17 +51,17 @@ export default function GitHubPage() {
                 priority
               />
             </div>
-            <div className="flex-1 space-y-2">
-              <div className="flex items-center gap-3">
-                <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100">Rudy Haddad</h1>
+            <div className="flex-1 space-y-2 min-w-0">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-zinc-900 dark:text-zinc-100 break-words">Rudy Haddad</h1>
                 <span className={badge}>@rudy002</span>
               </div>
-              <p className="text-zinc-700 dark:text-zinc-300">
+              <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 break-words">
                 Full-stack & AI automation — Next.js, n8n, RAG, workflow tooling. Building chat+browser CV experience and
                 survey/automation projects.
               </p>
-              <div className="flex flex-wrap gap-3 text-xs">
-                <span className="px-3 py-1 rounded-full bg-white/70 text-zinc-800 border border-blue-100 dark:bg-white/5 dark:text-white dark:border-white/10">
+              <div className="flex flex-wrap gap-2 sm:gap-3 text-xs">
+                <span className="px-2 sm:px-3 py-1 rounded-full bg-white/70 text-zinc-800 border border-blue-100 dark:bg-white/5 dark:text-white dark:border-white/10">
                   Open to collabs/feedback
                 </span>
               </div>
@@ -71,29 +71,29 @@ export default function GitHubPage() {
 
         {/* Featured Repositories */}
         <div className="space-y-3">
-          <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Featured repositories</h2>
-          <div className="grid gap-4">
+          <h2 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100">Featured repositories</h2>
+          <div className="grid gap-3 sm:gap-4">
             {repos.map((repo, idx) => (
-              <div key={idx} className={cardClass}>
+              <div key={idx} className={`${cardClass} p-4 sm:p-5`}>
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <Code2 className="w-5 h-5 text-blue-600 dark:text-blue-300" />
-                      <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">{repo.name}</h3>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Code2 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-300 flex-shrink-0" />
+                      <h3 className="font-semibold text-sm sm:text-base text-zinc-900 dark:text-zinc-100 break-words">{repo.name}</h3>
                     </div>
-                    <p className="text-sm text-zinc-700 dark:text-zinc-300 mt-1">{repo.desc}</p>
-                    <div className="flex flex-wrap gap-2 mt-2 text-xs">
+                    <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 mt-1 break-words">{repo.desc}</p>
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 text-xs">
                       {repo.tech.map((t) => (
                         <span
                           key={t}
-                          className="px-2 py-1 rounded-full bg-zinc-100 text-zinc-700 dark:bg-white/10 dark:text-white"
+                          className="px-2 py-0.5 sm:py-1 rounded-full bg-zinc-100 text-zinc-700 dark:bg-white/10 dark:text-white"
                         >
                           {t}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <div className="flex flex-col items-end gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  <div className="hidden sm:flex flex-col items-end gap-2 text-xs text-zinc-600 dark:text-zinc-400 flex-shrink-0">
                     <div className="flex items-center gap-2">
                       <Star className="w-4 h-4" />
                       <span>—</span>
@@ -109,12 +109,12 @@ export default function GitHubPage() {
                     {repo.links.map((link) => (
                       <a
                         key={link.href}
-                        className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition text-xs"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 sm:py-1 rounded-full bg-blue-600 text-white active:bg-blue-700 hover:bg-blue-700 transition-all text-xs active:scale-[0.98] touch-manipulation min-h-[36px]"
                         href={link.href}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        <ExternalLink className="w-3.5 h-3.5" />
+                        <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                         {link.label}
                       </a>
                     ))}
@@ -124,19 +124,19 @@ export default function GitHubPage() {
             ))}
           </div>
 
-          <div className="flex justify-center pt-4">
+          <div className="flex justify-center pt-3 sm:pt-4">
             <a
               href="https://github.com/rudy002"
               target="_blank"
               rel="noreferrer"
-              className="relative inline-flex items-center gap-3 px-5 py-3 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-semibold shadow-xl hover:scale-105 transition-transform"
+              className="relative inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-semibold shadow-xl active:scale-105 hover:scale-105 transition-transform touch-manipulation min-h-[48px]"
             >
               <span className="absolute inset-0 rounded-full bg-blue-500/40 blur-xl animate-pulse" aria-hidden="true"></span>
               <span className="relative flex items-center gap-2">
-                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20 animate-bounce">
-                  <Github className="w-4 h-4" />
+                <span className="inline-flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-white/20 animate-bounce">
+                  <Github className="w-3 h-3 sm:w-4 sm:h-4" />
                 </span>
-                More on GitHub
+                <span className="text-sm sm:text-base">More on GitHub</span>
               </span>
             </a>
           </div>

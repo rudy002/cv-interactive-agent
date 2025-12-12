@@ -153,57 +153,57 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
       {/* Navigation bar */}
       <div className="flex-shrink-0 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
         {/* Navigation controls */}
-        <div className="flex items-center gap-2 p-3 border-b border-zinc-200 dark:border-zinc-800">
+        <div className="flex items-center gap-2 sm:gap-2 p-2 sm:p-3 border-b border-zinc-200 dark:border-zinc-800">
           <button
             onClick={goBack}
             disabled={historyIndex === 0}
-            className="p-2 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="p-2.5 sm:p-2 rounded-lg active:scale-95 hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
             title="Back"
           >
-            <ChevronLeft className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
+            <ChevronLeft className="w-5 h-5 sm:w-4 sm:h-4 text-zinc-700 dark:text-zinc-300" />
           </button>
           
           <button
             onClick={goForward}
             disabled={historyIndex === history.length - 1}
-            className="p-2 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="p-2.5 sm:p-2 rounded-lg active:scale-95 hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
             title="Forward"
           >
-            <ChevronRight className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
+            <ChevronRight className="w-5 h-5 sm:w-4 sm:h-4 text-zinc-700 dark:text-zinc-300" />
           </button>
           
           <button
             onClick={refresh}
             disabled={isLoading}
-            className="p-2 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-50 transition-colors"
+            className="p-2.5 sm:p-2 rounded-lg active:scale-95 hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-50 transition-all touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
             title="Refresh"
           >
-            <RefreshCw className={`w-4 h-4 text-zinc-700 dark:text-zinc-300 ${isLoading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-5 h-5 sm:w-4 sm:h-4 text-zinc-700 dark:text-zinc-300 ${isLoading ? 'animate-spin' : ''}`} />
           </button>
 
           {/* URL bar */}
-          <div className="flex-1 flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-800 rounded-lg border border-zinc-300 dark:border-zinc-700">
-            <Globe className="w-4 h-4 text-zinc-400" />
-            <span className="text-sm text-zinc-600 dark:text-zinc-400 truncate">
+          <div className="flex-1 flex items-center gap-2 px-2 sm:px-3 py-2 bg-white dark:bg-zinc-800 rounded-lg border border-zinc-300 dark:border-zinc-700 min-w-0">
+            <Globe className="w-4 h-4 sm:w-4 sm:h-4 text-zinc-400 flex-shrink-0" />
+            <span className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 truncate">
               {currentPage.url}
             </span>
           </div>
         </div>
 
         {/* Quick navigation tabs */}
-        <div className="flex gap-1 px-2 py-2 overflow-x-auto">
+        <div className="flex gap-1.5 sm:gap-1 px-2 sm:px-2 py-2.5 sm:py-2 overflow-x-auto scrollbar-hide scroll-smooth">
           {visiblePages.map((page) => (
             <button
               key={page.id}
               onClick={() => navigateToPage(page)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+              className={`flex items-center gap-2 px-3.5 sm:px-3 py-2.5 sm:py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap active:scale-95 touch-manipulation min-h-[44px] sm:min-h-0 ${
                 currentPage.id === page.id
                   ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm"
-                  : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800"
+                  : "text-zinc-600 dark:text-zinc-400 active:bg-zinc-200 dark:active:bg-zinc-800"
               }`}
             >
-              {page.icon}
-              <span>{page.name}</span>
+              <span className="flex-shrink-0">{page.icon}</span>
+              <span className="hidden sm:inline">{page.name}</span>
             </button>
           ))}
         </div>
@@ -227,8 +227,8 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
         </div>
       </div>
 
-      {/* Current page indicator */}
-      <div className="flex-shrink-0 px-4 py-2 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
+      {/* Current page indicator - hidden on mobile */}
+      <div className="hidden sm:flex flex-shrink-0 px-4 py-2 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
         <p className="text-xs text-zinc-500 dark:text-zinc-400 text-center">
           Viewing: <span className="font-medium text-zinc-700 dark:text-zinc-300">{currentPage.name}</span>
         </p>
