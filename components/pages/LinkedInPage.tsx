@@ -260,6 +260,18 @@ export default function LinkedInPage() {
                   <li>Built for simple field use; roadmap: constraints, export, roles.</li>
                 </ul>
               </div>
+
+              <div className="flex justify-center pt-2">
+                <a
+                  href="https://github.com/rudy002"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium shadow-lg hover:scale-105 transition-transform"
+                >
+                  <span className="absolute inset-0 rounded-full bg-blue-500/50 blur-lg animate-pulse" aria-hidden="true"></span>
+                  <span className="relative">See more projects on GitHub</span>
+                </a>
+              </div>
             </div>
           </div>
 
