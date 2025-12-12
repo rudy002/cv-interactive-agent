@@ -40,8 +40,8 @@ export default function GitHubPage() {
         {/* Profile Header */}
         <div className="relative rounded-2xl overflow-hidden border border-blue-100 dark:border-zinc-800 shadow-lg">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-emerald-500/20 dark:from-blue-900/30 dark:via-purple-900/30 dark:to-emerald-900/30" />
-          <div className="relative p-6 sm:p-8 flex items-start gap-6">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-xl ring-4 ring-white dark:ring-zinc-900 bg-zinc-200 dark:bg-zinc-800">
+          <div className="relative p-6 sm:p-8 flex flex-col sm:flex-row items-start gap-6">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-xl ring-4 ring-white dark:ring-zinc-900 bg-zinc-200 dark:bg-zinc-800 mx-auto sm:mx-0">
               <Image
                 src="/images/linkedin-photo.jpeg"
                 alt="Rudy Haddad avatar"
@@ -75,7 +75,7 @@ export default function GitHubPage() {
           <div className="grid gap-4">
             {repos.map((repo, idx) => (
               <div key={idx} className={cardClass}>
-                <div className="flex items-start justify-between gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2">
                       <Code2 className="w-5 h-5 text-blue-600 dark:text-blue-300" />

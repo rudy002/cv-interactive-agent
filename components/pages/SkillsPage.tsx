@@ -83,15 +83,15 @@ const categories = [
 export default function SkillsPage() {
   return (
     <div className="h-full overflow-y-auto bg-zinc-50 dark:bg-zinc-950">
-      <div className="max-w-5xl mx-auto p-8 space-y-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-3">Skills & Tooling</h1>
-          <p className="text-lg text-zinc-600 dark:text-zinc-400">
+          <h1 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-3">Skills & Tooling</h1>
+          <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400">
             Stacks, workflows et fondamentaux que j’utilise au quotidien.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
           {categories.map((cat) => (
             <div key={cat.title} className={cardClass}>
               <div className="flex items-center gap-3 mb-4">

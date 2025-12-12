@@ -3,6 +3,7 @@
 import HomePage from "./pages/HomePage";
 import LinkedInPage from "./pages/LinkedInPage";
 import GitHubPage from "./pages/GitHubPage";
+import ChatInterfaces from "./ChatInterfaces";
 
 import SkillsPage from "./pages/SkillsPage";
 
@@ -20,6 +21,8 @@ export default function BrowserContent({ pageId }: BrowserContentProps) {
       return <GitHubPage />;
     case "skills":
       return <SkillsPage />;
+    case "chat":
+      return <ChatInterfaces />;
     default:
       return <HomePage />;
   }

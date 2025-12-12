@@ -17,7 +17,7 @@ export default function LinkedInPage() {
 
   return (
     <div className="h-full overflow-y-auto bg-zinc-50 dark:bg-zinc-950">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Header cover */}
         <div className="relative rounded-b-xl overflow-hidden border-b border-zinc-200 dark:border-zinc-800 shadow-sm">
           <div className="absolute inset-0">
@@ -32,8 +32,8 @@ export default function LinkedInPage() {
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/45 dark:from-black/25 dark:via-black/45 dark:to-black/65" />
           </div>
           <div className="relative px-8 pt-20 pb-8">
-            <div className="flex items-end gap-6">
-              <div className="w-32 h-32 rounded-full overflow-hidden shadow-xl ring-4 ring-white dark:ring-zinc-900 bg-zinc-200 dark:bg-zinc-800">
+            <div className="flex flex-col sm:flex-row sm:items-end gap-6">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden shadow-xl ring-4 ring-white dark:ring-zinc-900 bg-zinc-200 dark:bg-zinc-800 mx-auto sm:mx-0">
                 <Image
                   src="/images/linkedin-photo.jpeg"
                   alt="Rudy Haddad portrait"
@@ -45,8 +45,8 @@ export default function LinkedInPage() {
               </div>
               <div className="flex-1">
                 <div className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md rounded-xl px-4 py-3 shadow-lg border border-white/40 dark:border-white/10">
-                  <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">Rudy Haddad</h1>
-                  <p className="text-lg text-zinc-700 dark:text-zinc-200">Full-Stack Developer | AI Automation & RAG | React & Node.js</p>
+                  <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-100">Rudy Haddad</h1>
+                  <p className="text-base sm:text-lg text-zinc-700 dark:text-zinc-200">Full-Stack Developer | AI Automation & RAG | React & Node.js</p>
                   <p className="text-sm text-zinc-600 dark:text-zinc-300 mt-1">Israel • 500+ connections</p>
                 </div>
               </div>
@@ -55,7 +55,7 @@ export default function LinkedInPage() {
         </div>
 
         {/* Sections */}
-        <div className="p-8 space-y-6">
+        <div className="px-4 sm:px-8 py-8 space-y-6">
           {/* About */}
           <div className={cardClass}>
             <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">About</h2>
@@ -169,7 +169,7 @@ export default function LinkedInPage() {
           <div className={cardClass}>
             <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Experience</h2>
             <div className="space-y-6">
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="w-12 h-12 rounded bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center flex-shrink-0">
                   <Briefcase className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>

@@ -60,19 +60,19 @@ export default function HomePage() {
   };
   return (
     <div className="h-full overflow-y-auto bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950">
-      <div className="max-w-4xl mx-auto px-8 py-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-5xl font-bold shadow-2xl">
+          <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-5xl font-bold shadow-2xl">
             <img src="/images/linkedin-photo.jpeg" alt="Rudy Haddad" className="w-full h-full object-cover rounded-full" />
           </div>
-          <h1 className="text-5xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
+          <h1 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
             Rudy Haddad
           </h1>
-          <p className="text-2xl text-zinc-600 dark:text-zinc-400 mb-6">
+          <p className="text-xl sm:text-2xl text-zinc-600 dark:text-zinc-400 mb-6">
             Full-Stack Developer & AI Expert
           </p>
-          <div className="flex items-center justify-center gap-4 text-zinc-500 dark:text-zinc-500">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-zinc-500 dark:text-zinc-500">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4" />
               <span>Israel</span>
@@ -98,7 +98,7 @@ export default function HomePage() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-16">
           <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700">
             <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">5+</div>
             <div className="text-sm text-zinc-600 dark:text-zinc-400">Years in software engineering</div>
@@ -122,7 +122,7 @@ export default function HomePage() {
         </div>
 
         {/* Quick Links */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <a 
             href="https://linkedin.com/in/rudy-haddad" 
             target="_blank"

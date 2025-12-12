@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Globe, Home, Briefcase, Code2, Linkedin, Code, ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
+import { Globe, Home, Briefcase, Code2, Linkedin, Code, ChevronLeft, ChevronRight, RefreshCw, Bot } from "lucide-react";
 import BrowserContent from "./BrowserContent";
 
 interface BrowserPage {
@@ -13,6 +13,13 @@ interface BrowserPage {
 }
 
 const PAGES: BrowserPage[] = [
+  {
+    id: "chat",
+    name: "Chat AI",
+    url: "chat.rudyhaddad.com",
+    icon: <Bot className="w-4 h-4" />,
+    keywords: ["chat", "ai", "assistant", "question", "conversation", "discuss", "ask"],
+  },
   {
     id: "home",
     name: "Home",
@@ -34,9 +41,6 @@ const PAGES: BrowserPage[] = [
     icon: <Code2 className="w-4 h-4" />,
     keywords: ["github", "code", "project", "projects", "repositories", "repo", "open source", "development", "built", "created", "developed"],
   },
-  
-
-  
   {
     id: "skills",
     name: "Skills",
@@ -45,17 +49,47 @@ const PAGES: BrowserPage[] = [
     keywords: ["skills", "skill", "technologies", "technology", "stack", "tech", "tools", "tool", "master", "know", "capable", "react", "node", "python", "javascript", "typescript"],
   },
 ];
+const DEFAULT_DESKTOP_PAGE = PAGES.find((p) => p.id === "home") || PAGES[1];
+const CHAT_PAGE = PAGES.find((p) => p.id === "chat") || PAGES[0];
 
 interface MiniBrowserProps {
   currentTopic?: string;
 }
 
 export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
-  const [currentPage, setCurrentPage] = useState(PAGES[0]);
-  const [history, setHistory] = useState<BrowserPage[]>([PAGES[0]]);
+  const [isMobile, setIsMobile] = useState(false);
+  const [currentPage, setCurrentPage] = useState(DEFAULT_DESKTOP_PAGE);
+  const [history, setHistory] = useState<BrowserPage[]>([DEFAULT_DESKTOP_PAGE]);
   const [historyIndex, setHistoryIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [key, setKey] = useState(0);
+
+  const visiblePages = isMobile ? PAGES : PAGES.filter((p) => p.id !== "chat");
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1023px)");
+    const handler = () => setIsMobile(mq.matches);
+    handler();
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  // Sync current page when switching between mobile and desktop
+  useEffect(() => {
+    if (!isMobile && currentPage.id === "chat") {
+      setCurrentPage(DEFAULT_DESKTOP_PAGE);
+      setHistory([DEFAULT_DESKTOP_PAGE]);
+      setHistoryIndex(0);
+      setKey((prev) => prev + 1);
+      return;
+    }
+    if (isMobile && currentPage.id !== "chat") {
+      setCurrentPage(CHAT_PAGE);
+      setHistory([CHAT_PAGE]);
+      setHistoryIndex(0);
+      setKey((prev) => prev + 1);
+    }
+  }, [isMobile]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Automatically detect which page to display based on the topic
   useEffect(() => {
@@ -65,12 +99,12 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
         page.keywords.some(keyword => topicLower.includes(keyword))
       );
       
-      if (matchedPage && matchedPage.id !== currentPage.id) {
+      if (matchedPage && matchedPage.id !== currentPage.id && (isMobile || matchedPage.id !== "chat")) {
         navigateToPage(matchedPage);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTopic]);
+  }, [currentTopic, isMobile]);
 
   const navigateToPage = (page: BrowserPage) => {
     setIsLoading(true);
@@ -158,7 +192,7 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
 
         {/* Quick navigation tabs */}
         <div className="flex gap-1 px-2 py-2 overflow-x-auto">
-          {PAGES.map((page) => (
+          {visiblePages.map((page) => (
             <button
               key={page.id}
               onClick={() => navigateToPage(page)}
