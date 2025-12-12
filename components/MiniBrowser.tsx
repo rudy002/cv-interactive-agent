@@ -247,44 +247,32 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
   const menuItems = [
     {
       icon: Share2,
-      label: "Partager",
+      label: "Share",
       action: handleShare,
       divider: false,
     },
     {
       icon: Copy,
-      label: copied ? "Lien copié !" : "Copier le lien",
+      label: copied ? "Link copied!" : "Copy link",
       action: handleCopyLink,
       divider: false,
     },
     {
       icon: Linkedin,
-      label: "Partager sur LinkedIn",
+      label: "Share on LinkedIn",
       action: handleShareLinkedIn,
       divider: true,
     },
     {
       icon: Download,
-      label: "Télécharger en PDF",
+      label: "Download PDF",
       action: handleDownloadPDF,
-      divider: false,
-    },
-    {
-      icon: Printer,
-      label: "Imprimer",
-      action: handlePrint,
       divider: true,
     },
     {
       icon: isDark ? Sun : Moon,
-      label: isDark ? "Mode clair" : "Mode sombre",
+      label: isDark ? "Light mode" : "Dark mode",
       action: toggleTheme,
-      divider: false,
-    },
-    {
-      icon: ExternalLink,
-      label: "Voir le code source",
-      action: handleViewSource,
       divider: false,
     },
   ];
@@ -330,7 +318,7 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
             onClick={goBack}
             disabled={historyIndex === 0}
               className="p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-              title="Retour"
+            title="Back"
           >
               <ChevronLeft className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
           </button>
@@ -339,7 +327,7 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
             onClick={goForward}
             disabled={historyIndex === history.length - 1}
               className="p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-              title="Avant"
+            title="Forward"
           >
               <ChevronRight className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
           </button>
@@ -348,20 +336,34 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
             onClick={refresh}
             disabled={isLoading}
               className="p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-700 disabled:opacity-50 transition-all"
-              title="Actualiser"
+            title="Refresh"
           >
               <RefreshCw className={`w-4 h-4 text-zinc-700 dark:text-zinc-300 ${isLoading ? 'animate-spin' : ''}`} />
           </button>
           </div>
 
           {/* URL Bar - Style Chrome/Safari */}
-          <div className="flex-1 flex items-center gap-2 px-4 py-2 bg-zinc-50 dark:bg-zinc-900 rounded-full border border-zinc-300 dark:border-zinc-700 min-w-0 shadow-inner">
-            <Lock className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 flex-shrink-0" />
-            <span className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 truncate font-medium">
+          <div className="flex-1 flex items-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-zinc-50 dark:bg-zinc-900 rounded-full border border-zinc-300 dark:border-zinc-700 min-w-0 shadow-inner">
+            <Lock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-zinc-500 dark:text-zinc-400 flex-shrink-0" />
+            <span className="text-[10px] sm:text-xs md:text-sm text-zinc-700 dark:text-zinc-300 truncate font-medium flex-1 min-w-0">
               https://{currentPage.url}
             </span>
-            <div className="ml-auto flex items-center gap-1">
-              <Star className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500 hover:text-yellow-500 cursor-pointer transition-colors" />
+            <div className="ml-auto flex items-center gap-1 flex-shrink-0">
+              {isMobile ? (
+                <button
+                  onClick={toggleTheme}
+                  className="p-0.5 sm:p-1 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+                  title={isDark ? "Light mode" : "Dark mode"}
+                >
+                  {isDark ? (
+                    <Sun className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-zinc-600 dark:text-zinc-400" />
+                  ) : (
+                    <Moon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-zinc-600 dark:text-zinc-400" />
+                  )}
+                </button>
+              ) : (
+                <Star className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500 hover:text-yellow-500 cursor-pointer transition-colors" />
+              )}
           </div>
         </div>
 
@@ -372,7 +374,7 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
               className={`p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all ${
                 isMenuOpen ? 'bg-zinc-100 dark:bg-zinc-700' : ''
               }`}
-              title="Menu"
+              title="More options"
             >
               <MoreVertical className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
             </button>
@@ -380,25 +382,33 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
             {/* Menu Dropdown */}
             {isMenuOpen && (
               <div className="absolute right-0 top-full mt-1 w-64 bg-white dark:bg-zinc-800 rounded-lg shadow-xl border border-zinc-200 dark:border-zinc-700 py-2 z-50">
-                {menuItems.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <div key={index}>
-                      {item.divider && index > 0 && (
-                        <div className="my-1 border-t border-zinc-200 dark:border-zinc-700" />
-                      )}
-                      <button
-                        onClick={item.action}
-                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors text-left"
-                      >
-                        <Icon className="w-4 h-4 flex-shrink-0" />
-                        <span className={copied && item.label.includes("copié") ? "text-green-600 dark:text-green-400 font-medium" : ""}>
-                          {item.label}
-                        </span>
-                      </button>
-                    </div>
-                  );
-                })}
+                {menuItems
+                  .filter((item) => {
+                    // Cacher le toggle de thème en mode mobile (il est dans la barre de recherche)
+                    if (isMobile && (item.label === "Light mode" || item.label === "Dark mode")) {
+                      return false;
+                    }
+                    return true;
+                  })
+                  .map((item, index) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={index}>
+                        {item.divider && index > 0 && (
+                          <div className="my-1 border-t border-zinc-200 dark:border-zinc-700" />
+                        )}
+                        <button
+                          onClick={item.action}
+                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors text-left"
+                        >
+                          <Icon className="w-4 h-4 flex-shrink-0" />
+                          <span className={copied && item.label.includes("copied") ? "text-green-600 dark:text-green-400 font-medium" : ""}>
+                            {item.label}
+                          </span>
+                        </button>
+                      </div>
+                    );
+                  })}
               </div>
             )}
           </div>
@@ -414,7 +424,7 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
                 <div className="w-12 h-12 border-4 border-zinc-200 dark:border-zinc-700 border-t-blue-500 rounded-full animate-spin" />
               </div>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium">
-                Chargement...
+                Loading...
               </p>
             </div>
           </div>
@@ -430,13 +440,13 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
         <div className="flex items-center gap-4 text-xs text-zinc-500 dark:text-zinc-400">
           <span className="flex items-center gap-1">
             <Lock className="w-3 h-3" />
-            <span>Connexion sécurisée</span>
+            <span>Secure connection</span>
           </span>
           <span>•</span>
           <span>{currentPage.url}</span>
         </div>
         <div className="text-xs text-zinc-500 dark:text-zinc-400">
-          {new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+          {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
         </div>
       </div>
     </div>

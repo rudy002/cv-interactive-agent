@@ -11,8 +11,8 @@ export default function Home() {
   return (
     <div className="flex h-screen w-full overflow-hidden bg-white dark:bg-black">
       <main className="flex-1 flex flex-col h-screen overflow-hidden relative">
-        {/* Toggle de thème en haut à droite */}
-        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
+        {/* Toggle de thème en haut à droite - caché en mobile (toggle dans la barre URL) */}
+        <div className="hidden lg:block absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
           <ThemeToggle />
         </div>
         
