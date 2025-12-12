@@ -109,36 +109,58 @@ export default function LinkedInPage() {
 
           {/* Skills */}
           <div className={cardClass}>
-            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Key skills</h2>
-            <div className="grid md:grid-cols-2 gap-6 text-sm text-zinc-700 dark:text-zinc-300">
-              <div className="space-y-2">
-                <p className="font-semibold text-zinc-900 dark:text-zinc-100">Technical</p>
-                <ul className="list-disc pl-4 space-y-1">
-                  <li>Languages: Python, TypeScript/JavaScript, Java, C/C++</li>
-                  <li>Frontend: React, Next.js (pages & app router), Tailwind, MUI</li>
-                  <li>Backend & APIs: Node.js, REST, webhooks, basic auth</li>
-                  <li>DB & storage: PostgreSQL, MongoDB, Supabase, Airtable, external APIs</li>
-                  <li>Data: Jupyter, pandas, graph/network analysis (NetworkX)</li>
-                  <li>Light DevOps: Git/GitHub, simple deploys (Render, hosted n8n)</li>
-                  <li>CS fundamentals: data structures, algorithms, complexity</li>
-                </ul>
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">Skills & Tooling</h2>
+            <div className="grid md:grid-cols-2 gap-4 text-sm">
+              <div className="rounded-xl border border-blue-100 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 shadow-sm space-y-3">
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">Technical</p>
+                  <p className="text-zinc-600 dark:text-zinc-300 text-xs">Stack & core engineering</p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">Python</span>
+                  <span className="px-2 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200">TypeScript/JS</span>
+                  <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200">Java</span>
+                  <span className="px-2 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-200">C/C++</span>
+                  <span className="px-2 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-200">React/Next.js</span>
+                  <span className="px-2 py-1 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-200">Tailwind/MUI</span>
+                  <span className="px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-200">Node.js/REST</span>
+                  <span className="px-2 py-1 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-200">Webhooks/Auth</span>
+                  <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200">PostgreSQL</span>
+                  <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">MongoDB</span>
+                  <span className="px-2 py-1 rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-200">Supabase/Airtable</span>
+                  <span className="px-2 py-1 rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200">APIs externes</span>
+                  <span className="px-2 py-1 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-200">pandas/Jupyter</span>
+                  <span className="px-2 py-1 rounded-full bg-lime-100 text-lime-700 dark:bg-lime-900/30 dark:text-lime-200">NetworkX/graphs</span>
+                  <span className="px-2 py-1 rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-200">CS fundamentals</span>
+                  <span className="px-2 py-1 rounded-full bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-200">Git/GitHub</span>
+                  <span className="px-2 py-1 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-200">Render/n8n deploys</span>
+                </div>
               </div>
-              <div className="space-y-2">
-                <p className="font-semibold text-zinc-900 dark:text-zinc-100">AI & Automation</p>
-                <ul className="list-disc pl-4 space-y-1">
-                  <li>n8n: multi-step workflows, triggers, errors, retries, integrations</li>
-                  <li>LLM: OpenAI & others, structured prompts, tool-using agents</li>
-                  <li>RAG: Drive/text ingestion, embeddings, Pinecone, retrieval config</li>
-                  <li>Chatbots: tools via n8n (API, Drive, email, calendar)</li>
-                  <li>Classical ML: scikit-learn, regression, classification, simple clustering</li>
-                </ul>
-                <p className="font-semibold text-zinc-900 dark:text-zinc-100 pt-2">Soft skills</p>
-                <ul className="list-disc pl-4 space-y-1">
-                  <li>Communicates clearly with non-technical stakeholders</li>
-                  <li>Autonomous and fast learner through experimentation</li>
-                  <li>Turns vague needs into concrete workflows/products</li>
-                  <li>Collaborates and iterates quickly</li>
-                </ul>
+              <div className="rounded-xl border border-blue-100 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 shadow-sm space-y-3">
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">AI & Automation</p>
+                  <p className="text-zinc-600 dark:text-zinc-300 text-xs">LLM, RAG, workflows</p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 rounded-full bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-200">n8n workflows</span>
+                  <span className="px-2 py-1 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-200">OpenAI & LLMs</span>
+                  <span className="px-2 py-1 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200">RAG (Pinecone)</span>
+                  <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">Drive ingestion</span>
+                  <span className="px-2 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-200">Structured prompts</span>
+                  <span className="px-2 py-1 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-200">Tool-using agents</span>
+                  <span className="px-2 py-1 rounded-full bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-200">Tooling chatbots (APIs, SaaS, data sources)</span>
+                  <span className="px-2 py-1 rounded-full bg-lime-100 text-lime-700 dark:bg-lime-900/30 dark:text-lime-200">Retries/error handling</span>
+                  <span className="px-2 py-1 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-200">Classical ML</span>
+                </div>
+                <div className="pt-1">
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">Soft skills</p>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    <span className="px-2 py-1 rounded-full bg-zinc-100 text-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-200">Clear communication</span>
+                    <span className="px-2 py-1 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200">Autonomous learner</span>
+                    <span className="px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200">Problem solving</span>
+                    <span className="px-2 py-1 rounded-full bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-200">Collaboration</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
