@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { Bot, Sparkles } from "lucide-react";
 
 interface Message {
   id: string;
@@ -16,6 +17,153 @@ const WELCOME_MESSAGE: Message = {
   id: "welcome",
   role: "assistant",
   content: "Hello! 👋\n\nI'm Rudy Haddad's virtual assistant. I'm here to answer all your questions about:\n\n• My professional background\n• My technical skills\n• My projects and achievements\n• My experience\n\nFeel free to ask me anything! The browser content on the left will automatically adapt to your questions.",
+};
+
+const URL_REGEX = /^https?:\/\/[^\s)]+$/i;
+const INLINE_MARKUP_REGEX =
+  /(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|\[[^\]]+\]\(https?:\/\/[^\s)]+\)|https?:\/\/[^\s)]+)/g;
+
+const DOMAIN_LABELS: Record<string, string> = {
+  "linkedin.com": "LinkedIn",
+  "www.linkedin.com": "LinkedIn",
+  "github.com": "GitHub",
+  "www.github.com": "GitHub",
+};
+
+const renderInline = (text: string, keyPrefix: string) => {
+  const segments = text.split(INLINE_MARKUP_REGEX).filter(Boolean);
+
+  return segments.map((segment, index) => {
+    const key = `${keyPrefix}-inline-${index}`;
+
+    const linkMatch = segment.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
+    if (linkMatch) {
+      const [, labelText, href] = linkMatch;
+      return (
+        <a
+          key={key}
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+          title={href}
+        >
+          <span>{labelText}</span>
+        </a>
+      );
+    }
+
+    if (URL_REGEX.test(segment)) {
+      let label = segment;
+      try {
+        const urlObj = new URL(segment);
+        const mapped = DOMAIN_LABELS[urlObj.hostname];
+        label = mapped || urlObj.hostname.replace(/^www\./, "");
+      } catch {
+        // keep original segment
+      }
+
+      return (
+        <a
+          key={key}
+          href={segment}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+          title={segment}
+        >
+          <span>{label}</span>
+        </a>
+      );
+    }
+
+    if (segment.startsWith("**") && segment.endsWith("**")) {
+      return <strong key={key}>{segment.slice(2, -2)}</strong>;
+    }
+
+    if (segment.startsWith("*") && segment.endsWith("*")) {
+      return <em key={key}>{segment.slice(1, -1)}</em>;
+    }
+
+    if (segment.startsWith("`") && segment.endsWith("`")) {
+      return (
+        <code
+          key={key}
+          className="rounded bg-zinc-200/70 dark:bg-zinc-800 px-1 py-0.5 text-sm"
+        >
+          {segment.slice(1, -1)}
+        </code>
+      );
+    }
+
+    return <span key={key}>{segment}</span>;
+  });
+};
+
+const renderBlock = (block: string, keyPrefix: string) => {
+  const lines = block
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  if (!lines.length) return null;
+
+  const isOrderedList = lines.every((line) => /^\d+[\.\)]\s+/.test(line));
+  const isUnorderedList = lines.every((line) => /^[-*•]\s+/.test(line));
+
+  if (isOrderedList) {
+    return (
+      <ol
+        key={`${keyPrefix}-ol`}
+        className="list-decimal pl-6 space-y-1.5 marker:text-zinc-500 dark:marker:text-zinc-400"
+      >
+        {lines.map((line, index) => {
+          const text = line.replace(/^\d+[\.\)]\s*/, "");
+          return (
+            <li key={`${keyPrefix}-ol-${index}`} className="text-base leading-relaxed">
+              {renderInline(text, `${keyPrefix}-ol-${index}`)}
+            </li>
+          );
+        })}
+      </ol>
+    );
+  }
+
+  if (isUnorderedList) {
+    return (
+      <ul
+        key={`${keyPrefix}-ul`}
+        className="list-disc pl-6 space-y-1.5 marker:text-zinc-500 dark:marker:text-zinc-400"
+      >
+        {lines.map((line, index) => {
+          const text = line.replace(/^[-*•]\s*/, "");
+          return (
+            <li key={`${keyPrefix}-ul-${index}`} className="text-base leading-relaxed">
+              {renderInline(text, `${keyPrefix}-ul-${index}`)}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
+
+  const paragraphText = lines.join(" ");
+
+  return (
+    <p key={`${keyPrefix}-p`} className="text-base leading-relaxed">
+      {renderInline(paragraphText, `${keyPrefix}-p`)}
+    </p>
+  );
+};
+
+const renderMessageContent = (content: string, messageId: string) => {
+  const blocks = content.trim().split(/\n\s*\n/);
+
+  return (
+    <div className="space-y-3 text-base leading-relaxed">
+      {blocks.map((block, index) => renderBlock(block, `${messageId}-block-${index}`))}
+    </div>
+  );
 };
 
 export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
@@ -163,9 +311,27 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
   ];
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex flex-col h-full w-full bg-gradient-to-b from-white via-zinc-50 to-white dark:from-black dark:via-zinc-950 dark:to-black">
+      <div className="w-full max-w-3xl mx-auto px-4 pt-5 pb-3">
+        <div className="rounded-2xl border border-zinc-200/70 dark:border-zinc-800 bg-white/85 dark:bg-zinc-900/80 backdrop-blur-md shadow-lg px-4 py-3 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center shadow-md">
+              <Bot className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Rudy’s Assistant</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">Clear, concise answers</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-1.5 text-[11px] text-blue-600 dark:text-blue-300 font-semibold px-2 py-1 rounded-full bg-blue-50/80 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Live chat</span>
+          </div>
+        </div>
+      </div>
+
       <div className="flex-1 overflow-y-auto scroll-smooth">
-        <div className="w-full max-w-3xl mx-auto px-4 py-6 space-y-6">
+        <div className="w-full max-w-3xl mx-auto px-4 pb-6 space-y-6">
           {messages.map((message) => (
             <div
               key={message.id}
@@ -174,20 +340,18 @@ export default function ChatInterfaces({ onTopicChange }: ChatInterfacesProps) {
               }`}
             >
               {message.role === "assistant" && (
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700 flex items-center justify-center flex-shrink-0 shadow-sm">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500/90 to-indigo-600/90 dark:from-blue-500/80 dark:to-indigo-600/80 flex items-center justify-center flex-shrink-0 shadow-sm text-white">
                   <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">RH</span>
                 </div>
               )}
               <div
-                className={`max-w-[80%] rounded-2xl px-5 py-3.5 shadow-sm ${
+                className={`max-w-[80%] rounded-2xl px-5 py-3.5 shadow-md ${
                   message.role === "user"
-                    ? "bg-gradient-to-br from-zinc-900 to-zinc-800 dark:from-zinc-100 dark:to-zinc-50 text-white dark:text-zinc-900"
-                    : "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700"
+                    ? "bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-700 text-white dark:from-zinc-100 dark:via-zinc-200 dark:to-white dark:text-zinc-900 border border-zinc-800/70"
+                    : "bg-white text-zinc-900 dark:bg-zinc-900/90 dark:text-zinc-50 border border-zinc-200 dark:border-zinc-800/80"
                 }`}
               >
-                <p className="text-base leading-relaxed whitespace-pre-wrap">
-                  {message.content}
-                </p>
+                {renderMessageContent(message.content, message.id)}
               </div>
               {message.role === "user" && (
                 <div className="w-9 h-9 rounded-full bg-gradient-to-br from-zinc-900 to-zinc-800 dark:from-zinc-100 dark:to-zinc-50 flex items-center justify-center flex-shrink-0 shadow-sm">

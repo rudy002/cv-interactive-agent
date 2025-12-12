@@ -35,6 +35,8 @@ const PAGES: BrowserPage[] = [
     keywords: ["github", "code", "project", "projects", "repositories", "repo", "open source", "development", "built", "created", "developed"],
   },
   
+
+  
   {
     id: "skills",
     name: "Skills",
