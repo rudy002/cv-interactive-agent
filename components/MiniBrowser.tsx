@@ -19,35 +19,70 @@ const PAGES: BrowserPage[] = [
     name: "Chat AI",
     url: "chat.rudyhaddad.com",
     icon: <Bot className="w-4 h-4" />,
-    keywords: ["chat", "ai", "assistant", "question", "conversation", "discuss", "ask"],
+    keywords: [
+      // English
+      "chat", "ai", "assistant", "question", "conversation", "discuss", "ask", "talk", "speak", "message", "help", "support", "bot", "chatbot",
+      // French
+      "chat", "discuter", "parler", "question", "demander", "aide", "assistant", "conversation", "message", "bot", "chatbot", "discussion",
+      // Hebrew
+      "צ'אט", "שיחה", "שאלה", "לשאול", "לשוחח", "לדבר", "עזרה", "עוזר", "בוט", "צ'אטבוט", "שיח", "הודעה"
+    ],
   },
   {
     id: "home",
     name: "Home",
     url: "rudyhaddad.com",
     icon: <Home className="w-4 h-4" />,
-    keywords: ["home", "about", "main", "introduction", "hello", "who", "meet"],
+    keywords: [
+      // English
+      "home", "about", "main", "introduction", "hello", "who", "meet", "presentation", "overview", "welcome", "profile", "bio", "biography", "present", "introduce",
+      // French
+      "accueil", "accueillir", "à propos", "présentation", "bonjour", "salut", "qui", "rencontrer", "aperçu", "profil", "biographie", "bio", "présenter", "introduire",
+      // Hebrew
+      "בית", "עמוד בית", "אודות", "הצגה", "שלום", "מי", "לפגוש", "סקירה", "פרופיל", "ביוגרפיה", "להציג", "להכיר"
+    ],
   },
   {
     id: "linkedin",
     name: "Professional",
     url: "linkedin.com/in/rudy-haddad",
     icon: <Linkedin className="w-4 h-4" />,
-    keywords: ["linkedin", "professional", "network", "career", "job", "experience", "background", "education", "degree", "studies", "work", "position", "company"],
+    keywords: [
+      // English
+      "linkedin", "professional", "network", "career", "job", "experience", "background", "education", "degree", "studies", "work", "position", "company", "employment", "cv", "resume", "curriculum vitae", "employer", "hire", "hiring", "recruiter", "recruitment", "interview", "employment history", "work experience", "professional experience", "academic", "university", "college", "school", "diploma", "certification", "certificate", "training", "qualification",
+      // French
+      "linkedin", "professionnel", "réseau", "carrière", "emploi", "travail", "expérience", "parcours", "formation", "éducation", "diplôme", "études", "poste", "entreprise", "cv", "curriculum vitae", "employeur", "embaucher", "recruteur", "recrutement", "entretien", "historique professionnel", "expérience professionnelle", "académique", "université", "école", "certification", "certificat", "formation", "qualification",
+      // Hebrew
+      "לינקדאין", "מקצועי", "רשת", "קריירה", "עבודה", "תעסוקה", "ניסיון", "רקע", "השכלה", "תואר", "לימודים", "משרה", "חברה", "קורות חיים", "מעסיק", "לשכור", "מגייס", "גיוס", "ראיון", "היסטוריה תעסוקתית", "ניסיון מקצועי", "אקדמי", "אוניברסיטה", "מכללה", "בית ספר", "תעודה", "הסמכה", "הכשרה", "כישורים"
+    ],
   },
   {
     id: "github",
     name: "GitHub",
     url: "github.com/rudyhaddad",
     icon: <Code2 className="w-4 h-4" />,
-    keywords: ["github", "code", "project", "projects", "repositories", "repo", "open source", "development", "built", "created", "developed"],
+    keywords: [
+      // English
+      "github", "code", "project", "projects", "repositories", "repo", "open source", "development", "built", "created", "developed", "programming", "coding", "software", "application", "app", "program", "source code", "repository", "git", "version control", "contribution", "contribute", "pull request", "commit", "push", "clone", "fork", "star", "issue", "bug", "feature", "implementation", "algorithm", "data structure", "api", "backend", "frontend", "fullstack", "full stack",
+      // French
+      "github", "code", "projet", "projets", "dépôts", "dépôt", "open source", "développement", "construit", "créé", "développé", "programmation", "codage", "logiciel", "application", "app", "programme", "code source", "répertoire", "git", "contrôle de version", "contribution", "contribuer", "pull request", "commit", "push", "clone", "fork", "star", "issue", "bug", "fonctionnalité", "implémentation", "algorithme", "structure de données", "api", "backend", "frontend", "fullstack", "full stack",
+      // Hebrew
+      "גיטהאב", "קוד", "פרויקט", "פרויקטים", "מאגרים", "מאגר", "קוד פתוח", "פיתוח", "נבנה", "נוצר", "מפותח", "תכנות", "קידוד", "תוכנה", "אפליקציה", "אפ", "תוכנית", "קוד מקור", "מאגר", "גיט", "בקרת גרסאות", "תרומה", "לתרום", "pull request", "קומיט", "פוש", "קלון", "פורק", "כוכב", "בעיה", "באג", "תכונה", "יישום", "אלגוריתם", "מבנה נתונים", "api", "בקאנד", "פרונטאנד", "פולסטאק"
+    ],
   },
   {
     id: "skills",
     name: "Skills",
     url: "rudyhaddad.com/skills",
     icon: <Code className="w-4 h-4" />,
-    keywords: ["skills", "skill", "technologies", "technology", "stack", "tech", "tools", "tool", "master", "know", "capable", "react", "node", "python", "javascript", "typescript"],
+    keywords: [
+      // English
+      "skills", "skill", "technologies", "technology", "stack", "tech", "tools", "tool", "master", "know", "capable", "react", "node", "python", "javascript", "typescript", "expertise", "competence", "ability", "proficiency", "knowledge", "know-how", "framework", "library", "language", "programming language", "database", "sql", "nosql", "mongodb", "postgresql", "mysql", "html", "css", "tailwind", "bootstrap", "next.js", "nextjs", "express", "rest", "api", "graphql", "docker", "kubernetes", "aws", "azure", "gcp", "cloud", "devops", "ci/cd", "testing", "jest", "cypress", "webpack", "vite", "npm", "yarn", "git", "linux", "bash", "shell", "agile", "scrum", "methodology",
+      // French
+      "compétences", "compétence", "technologies", "technologie", "stack", "tech", "outils", "outil", "maîtriser", "connaître", "capable", "react", "node", "python", "javascript", "typescript", "expertise", "aptitude", "capacité", "maîtrise", "connaissance", "savoir-faire", "framework", "bibliothèque", "langage", "langage de programmation", "base de données", "sql", "nosql", "mongodb", "postgresql", "mysql", "html", "css", "tailwind", "bootstrap", "next.js", "nextjs", "express", "rest", "api", "graphql", "docker", "kubernetes", "aws", "azure", "gcp", "cloud", "devops", "ci/cd", "tests", "jest", "cypress", "webpack", "vite", "npm", "yarn", "git", "linux", "bash", "shell", "agile", "scrum", "méthodologie",
+      // Hebrew
+      "כישורים", "כישור", "טכנולוגיות", "טכנולוגיה", "סטאק", "טק", "כלים", "כלי", "לשלוט", "לדעת", "מסוגל", "ריאקט", "נוד", "פייתון", "ג'אווהסקריפט", "טייפסקריפט", "מומחיות", "יכולת", "כשירות", "ידע", "know-how", "פריימוורק", "ספרייה", "שפה", "שפת תכנות", "מסד נתונים", "sql", "nosql", "מונגודיב", "פוסטגרס", "mysql", "html", "css", "טיילווינד", "בוטסטראפ", "נקסט", "אקספרס", "רסט", "api", "גרף קיו אל", "דוקר", "קוברנטיס", "aws", "אזור", "gcp", "ענן", "דבופס", "ci/cd", "בדיקות", "ג'סט", "סייפרס", "וובפאק", "ויט", "npm", "יארן", "גיט", "לינוקס", "באש", "של", "אג'יל", "סקראם", "מתודולוגיה"
+    ],
   },
 ];
 const DEFAULT_DESKTOP_PAGE = PAGES.find((p) => p.id === "home") || PAGES[1];
