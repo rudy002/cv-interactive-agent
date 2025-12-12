@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Globe, Home, Briefcase, Code2, Linkedin, Code, ChevronLeft, ChevronRight, RefreshCw, Bot } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Globe, Home, Briefcase, Code2, Linkedin, Code, ChevronLeft, ChevronRight, RefreshCw, Bot, Lock, X, MoreVertical, Star, Share2, Download, Printer, Copy, Moon, Sun, ExternalLink } from "lucide-react";
+import { useTheme } from "next-themes";
 import BrowserContent from "./BrowserContent";
 
 interface BrowserPage {
@@ -63,6 +64,10 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
   const [historyIndex, setHistoryIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [key, setKey] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   const visiblePages = isMobile ? PAGES : PAGES.filter((p) => p.id !== "chat");
 
@@ -148,90 +153,291 @@ export default function MiniBrowser({ currentTopic }: MiniBrowserProps) {
     setTimeout(() => setIsLoading(false), 400);
   };
 
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Erreur lors de la copie:', err);
+    }
+  };
+
+  const handleCopyLink = () => {
+    const url = window.location.href;
+    copyToClipboard(url);
+    setIsMenuOpen(false);
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: `CV de Rudy Haddad - ${currentPage.name}`,
+      text: `Découvrez mon CV interactif - ${currentPage.name}`,
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        setIsMenuOpen(false);
+      } catch (err) {
+        // L'utilisateur a annulé le partage
+        console.log('Partage annulé');
+      }
+    } else {
+      // Fallback: copier le lien
+      handleCopyLink();
+    }
+  };
+
+  const handleDownloadPDF = () => {
+    // Télécharger le fichier PDF depuis le dossier public
+    const pdfPath = '/fichierPDF/Rudy Haddad - FullStack.pdf';
+    const link = document.createElement('a');
+    link.href = pdfPath;
+    link.download = 'Rudy_Haddad_FullStack.pdf'; // Nom du fichier téléchargé
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setIsMenuOpen(false);
+  };
+
+  const handlePrint = () => {
+    window.print();
+    setIsMenuOpen(false);
+  };
+
+  const handleShareLinkedIn = () => {
+    const url = encodeURIComponent(window.location.href);
+    const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+    window.open(linkedInUrl, '_blank');
+    setIsMenuOpen(false);
+  };
+
+  const handleViewSource = () => {
+    window.open('https://github.com/rudyhaddad/cv-agent', '_blank');
+    setIsMenuOpen(false);
+  };
+
+  const toggleTheme = () => {
+    const isDark = resolvedTheme === 'dark';
+    setTheme(isDark ? 'light' : 'dark');
+    setIsMenuOpen(false);
+  };
+
+  const isDark = resolvedTheme === 'dark';
+
+  const menuItems = [
+    {
+      icon: Share2,
+      label: "Partager",
+      action: handleShare,
+      divider: false,
+    },
+    {
+      icon: Copy,
+      label: copied ? "Lien copié !" : "Copier le lien",
+      action: handleCopyLink,
+      divider: false,
+    },
+    {
+      icon: Linkedin,
+      label: "Partager sur LinkedIn",
+      action: handleShareLinkedIn,
+      divider: true,
+    },
+    {
+      icon: Download,
+      label: "Télécharger en PDF",
+      action: handleDownloadPDF,
+      divider: false,
+    },
+    {
+      icon: Printer,
+      label: "Imprimer",
+      action: handlePrint,
+      divider: true,
+    },
+    {
+      icon: isDark ? Sun : Moon,
+      label: isDark ? "Mode clair" : "Mode sombre",
+      action: toggleTheme,
+      divider: false,
+    },
+    {
+      icon: ExternalLink,
+      label: "Voir le code source",
+      action: handleViewSource,
+      divider: false,
+    },
+  ];
+
   return (
-    <div className="w-full h-full flex flex-col bg-white dark:bg-zinc-900">
-      {/* Navigation bar */}
-      <div className="flex-shrink-0 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
-        {/* Navigation controls */}
-        <div className="flex items-center gap-2 sm:gap-2 p-2 sm:p-3 border-b border-zinc-200 dark:border-zinc-800">
+    <div className="w-full h-full flex flex-col bg-zinc-100 dark:bg-zinc-950">
+      {/* Browser Chrome - Top Bar */}
+      <div className="flex-shrink-0 bg-zinc-200 dark:bg-zinc-900 border-b border-zinc-300 dark:border-zinc-800">
+        {/* Tabs Bar */}
+        <div className="flex items-end gap-1 px-2 pt-2 overflow-x-auto scrollbar-hide">
+          {visiblePages.map((page) => (
+            <div
+              key={page.id}
+              onClick={() => navigateToPage(page)}
+              className={`group relative flex items-center gap-2 px-4 py-2 rounded-t-lg border-t border-x transition-all cursor-pointer min-w-[120px] sm:min-w-[140px] ${
+                currentPage.id === page.id
+                  ? "bg-white dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 shadow-sm z-10"
+                  : "bg-zinc-100 dark:bg-zinc-900/50 border-transparent hover:bg-zinc-50 dark:hover:bg-zinc-900"
+              }`}
+            >
+              <span className="flex-shrink-0 text-zinc-600 dark:text-zinc-400">
+                {page.icon}
+              </span>
+              <span className={`text-xs sm:text-sm font-medium truncate ${
+                currentPage.id === page.id
+                  ? "text-zinc-900 dark:text-zinc-100"
+                  : "text-zinc-600 dark:text-zinc-400"
+              }`}>
+                {page.name}
+              </span>
+              {currentPage.id === page.id && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500" />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Navigation Bar */}
+        <div className="flex items-center gap-2 p-2 bg-white dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700">
+          {/* Navigation Controls */}
+          <div className="flex items-center gap-1">
           <button
             onClick={goBack}
             disabled={historyIndex === 0}
-            className="p-2.5 sm:p-2 rounded-lg active:scale-95 hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
-            title="Back"
+              className="p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="Retour"
           >
-            <ChevronLeft className="w-5 h-5 sm:w-4 sm:h-4 text-zinc-700 dark:text-zinc-300" />
+              <ChevronLeft className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
           </button>
           
           <button
             onClick={goForward}
             disabled={historyIndex === history.length - 1}
-            className="p-2.5 sm:p-2 rounded-lg active:scale-95 hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-30 disabled:cursor-not-allowed transition-all touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
-            title="Forward"
+              className="p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-700 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="Avant"
           >
-            <ChevronRight className="w-5 h-5 sm:w-4 sm:h-4 text-zinc-700 dark:text-zinc-300" />
+              <ChevronRight className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
           </button>
           
           <button
             onClick={refresh}
             disabled={isLoading}
-            className="p-2.5 sm:p-2 rounded-lg active:scale-95 hover:bg-zinc-200 dark:hover:bg-zinc-800 disabled:opacity-50 transition-all touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
-            title="Refresh"
+              className="p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-700 disabled:opacity-50 transition-all"
+              title="Actualiser"
           >
-            <RefreshCw className={`w-5 h-5 sm:w-4 sm:h-4 text-zinc-700 dark:text-zinc-300 ${isLoading ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-4 h-4 text-zinc-700 dark:text-zinc-300 ${isLoading ? 'animate-spin' : ''}`} />
           </button>
+          </div>
 
-          {/* URL bar */}
-          <div className="flex-1 flex items-center gap-2 px-2 sm:px-3 py-2 bg-white dark:bg-zinc-800 rounded-lg border border-zinc-300 dark:border-zinc-700 min-w-0">
-            <Globe className="w-4 h-4 sm:w-4 sm:h-4 text-zinc-400 flex-shrink-0" />
-            <span className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 truncate">
-              {currentPage.url}
+          {/* URL Bar - Style Chrome/Safari */}
+          <div className="flex-1 flex items-center gap-2 px-4 py-2 bg-zinc-50 dark:bg-zinc-900 rounded-full border border-zinc-300 dark:border-zinc-700 min-w-0 shadow-inner">
+            <Lock className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400 flex-shrink-0" />
+            <span className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 truncate font-medium">
+              https://{currentPage.url}
             </span>
+            <div className="ml-auto flex items-center gap-1">
+              <Star className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500 hover:text-yellow-500 cursor-pointer transition-colors" />
           </div>
         </div>
 
-        {/* Quick navigation tabs */}
-        <div className="flex gap-1.5 sm:gap-1 px-2 sm:px-2 py-2.5 sm:py-2 overflow-x-auto scrollbar-hide scroll-smooth">
-          {visiblePages.map((page) => (
+          {/* Menu Button */}
+          <div className="relative" ref={menuRef}>
             <button
-              key={page.id}
-              onClick={() => navigateToPage(page)}
-              className={`flex items-center gap-2 px-3.5 sm:px-3 py-2.5 sm:py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap active:scale-95 touch-manipulation min-h-[44px] sm:min-h-0 ${
-                currentPage.id === page.id
-                  ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm"
-                  : "text-zinc-600 dark:text-zinc-400 active:bg-zinc-200 dark:active:bg-zinc-800"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className={`p-1.5 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-all ${
+                isMenuOpen ? 'bg-zinc-100 dark:bg-zinc-700' : ''
               }`}
+              title="Menu"
             >
-              <span className="flex-shrink-0">{page.icon}</span>
-              <span className="hidden sm:inline">{page.name}</span>
+              <MoreVertical className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
             </button>
-          ))}
+
+            {/* Menu Dropdown */}
+            {isMenuOpen && (
+              <div className="absolute right-0 top-full mt-1 w-64 bg-white dark:bg-zinc-800 rounded-lg shadow-xl border border-zinc-200 dark:border-zinc-700 py-2 z-50">
+                {menuItems.map((item, index) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={index}>
+                      {item.divider && index > 0 && (
+                        <div className="my-1 border-t border-zinc-200 dark:border-zinc-700" />
+                      )}
+                      <button
+                        onClick={item.action}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors text-left"
+                      >
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        <span className={copied && item.label.includes("copié") ? "text-green-600 dark:text-green-400 font-medium" : ""}>
+                          {item.label}
+                        </span>
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Browser area (custom content) */}
+      {/* Browser Content Area */}
       <div className="flex-1 relative bg-white dark:bg-zinc-900 overflow-hidden">
         {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/80 dark:bg-zinc-900/80 z-10">
+          <div className="absolute inset-0 flex items-center justify-center bg-white/90 dark:bg-zinc-900/90 z-20 backdrop-blur-sm">
             <div className="flex flex-col items-center gap-3">
-              <RefreshCw className="w-8 h-8 text-zinc-400 animate-spin" />
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                Loading...
+              <div className="relative">
+                <div className="w-12 h-12 border-4 border-zinc-200 dark:border-zinc-700 border-t-blue-500 rounded-full animate-spin" />
+              </div>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium">
+                Chargement...
               </p>
             </div>
           </div>
         )}
         
-        <div key={key} className="w-full h-full">
+        <div key={key} className="w-full h-full overflow-auto">
           <BrowserContent pageId={currentPage.id} />
         </div>
       </div>
 
-      {/* Current page indicator - hidden on mobile */}
-      <div className="hidden sm:flex flex-shrink-0 px-4 py-2 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
-        <p className="text-xs text-zinc-500 dark:text-zinc-400 text-center">
-          Viewing: <span className="font-medium text-zinc-700 dark:text-zinc-300">{currentPage.name}</span>
-        </p>
+      {/* Status Bar */}
+      <div className="hidden sm:flex flex-shrink-0 items-center justify-between px-4 py-1.5 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
+        <div className="flex items-center gap-4 text-xs text-zinc-500 dark:text-zinc-400">
+          <span className="flex items-center gap-1">
+            <Lock className="w-3 h-3" />
+            <span>Connexion sécurisée</span>
+          </span>
+          <span>•</span>
+          <span>{currentPage.url}</span>
+        </div>
+        <div className="text-xs text-zinc-500 dark:text-zinc-400">
+          {new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+        </div>
       </div>
     </div>
   );
