@@ -299,6 +299,7 @@ export default function LinkedInPage() {
               <div className="pl-1 space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
                 <p className="font-semibold text-zinc-900 dark:text-zinc-100">Certifications</p>
                 <ul className="list-disc pl-4 space-y-1">
+                  <li>NVIDIA-Certified Associate: AI Infrastructure and Operations (NVIDIA 2026) – NVIDIA software stack, AI/ML/DL fundamentals, GPU vs CPU, cluster & job scheduling basics.</li>
                   <li>AI Automation with n8n & APIs (Udemy 2024) – workflows, RAG, errors, integrations.</li>
                   <li>Complete SQL Bootcamp (Udemy 2025) – queries, joins, aggregations, schemas.</li>
                   <li>Neural Networks and Deep Learning (Coursera 2023) – NN foundations, BP, regularization.</li>
