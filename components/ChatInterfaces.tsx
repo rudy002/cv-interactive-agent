@@ -16,7 +16,8 @@ interface ChatInterfacesProps {
 const WELCOME_MESSAGE: Message = {
   id: "welcome",
   role: "assistant",
-  content: "Hello! 👋\n\nI'm Rudy Haddad's virtual assistant. I'm here to answer all your questions about:\n\n• My professional background\n• My technical skills\n• My projects and achievements\n• My experience\n\nFeel free to ask me anything! The browser content on the left will automatically adapt to your questions.",
+  content:
+    "Hello! 👋\n\nI'm Rudy Haddad’s virtual assistant. I can answer your questions about:\n\n• My professional background\n• My technical skills\n• My projects and achievements\n• My experience\n\nYou can also ask me to send an email: I’ll generate a ready-to-click `mailto:` link and/or a draft message you can copy/paste.\n\nFeel free to ask me anything! The browser content on the left will automatically adapt to your questions.",
 };
 
 const URL_REGEX = /^https?:\/\/[^\s)]+$/i;
