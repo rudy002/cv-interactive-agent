@@ -98,11 +98,7 @@ export default function HomePage() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
-          <div className="bg-white dark:bg-zinc-800 rounded-xl p-5 sm:p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700 active:scale-[0.98] transition-transform">
-            <div className="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">5+</div>
-            <div className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">Years in software engineering</div>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 sm:max-w-2xl mx-auto gap-4 sm:gap-6 mb-12 sm:mb-16">
           <div className="bg-white dark:bg-zinc-800 rounded-xl p-5 sm:p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700 active:scale-[0.98] transition-transform">
             <div className="text-3xl sm:text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">8+</div>
             <div className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">Real-world projects (academic, freelance & personal)</div>
