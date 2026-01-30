@@ -11,6 +11,12 @@ const repos = [
     links: [{ label: "GitHub", href: "https://github.com/rudy002/cv-interactive-agent.git" }],
   },
   {
+    name: "rudy002/gpu-cpu-benchmark-pytorch",
+    desc: "CPU vs NVIDIA GPU benchmark with PyTorch: separates CPU→GPU transfer from GPU compute and tracks VRAM usage.",
+    tech: ["Python", "PyTorch", "CUDA", "Benchmarking", "GPU"],
+    links: [{ label: "GitHub", href: "https://github.com/rudy002/gpu-cpu-benchmark-pytorch" }],
+  },
+  {
     name: "rudy002/SurveyPro (fork)",
     desc: "Fork of SurveyFlow: dynamic survey platform with React Flow builder and Node/Express API.",
     tech: ["Next.js", "React Flow", "Tailwind", "Node/Express", "MongoDB"],
