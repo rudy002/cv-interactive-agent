@@ -129,10 +129,12 @@ describe("system prompt", () => {
     }
   });
 
-  it("forbids inventing facts and pins the answer language", () => {
+  it("defers scope and style to the rules Rudy maintains in the repo", () => {
+    // These used to be restated here; two copies of a rule drift apart.
     const prompt = agentSystemMessage();
-    expect(prompt).toMatch(/never invent/i);
-    expect(prompt).toMatch(/same language/i);
+    expect(prompt).toContain("<operating_rules>");
+    expect(prompt).toMatch(/follow them exactly/i);
+    expect(prompt).not.toMatch(/pythagorean/i);
   });
 
   it("offers the real contact address when knowledge is missing", () => {

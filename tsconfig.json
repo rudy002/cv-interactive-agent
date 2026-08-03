@@ -39,6 +39,7 @@
     "components/**/*.ts",
     "components/**/*.tsx",
     "data/**/*.ts",
+    "evals/**/*.ts",
     "hooks/**/*.ts",
     "hooks/**/*.tsx",
     "lib/**/*.ts",
@@ -49,6 +50,7 @@
     "types/**/*.d.ts",
     "**/*.mts",
     "vitest.config.mts",
+    "vitest.eval.config.mts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],

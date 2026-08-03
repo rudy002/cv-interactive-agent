@@ -10,35 +10,31 @@ import {
   rolesOfInterest,
   stats,
 } from "@/data/profile";
-import { extraKnowledge } from "@/data/knowledge";
+import { assistantRules, extraKnowledge } from "@/data/knowledge";
 import { projects } from "@/data/projects";
 import { aiSkills, skillCategories, softSkills, technicalSkills } from "@/data/skills";
 
 /**
- * Serialises everything the site knows into one plain-text document for the
- * chat agent.
+ * Serialises everything the site knows into one document for the chat agent.
  *
- * This is the whole point of the architecture: the pages and the agent read the
- * same `data/` modules, so they cannot describe different people. It replaces a
- * Google Drive → vector store ingestion that could only ever *add* knowledge,
- * leaving stale copies of an outdated CV alongside the current one.
+ * The pages and the agent read the same `data/` modules, so they cannot
+ * describe different people. It replaces a Google Drive → vector store
+ * ingestion that could only ever *add* knowledge, leaving stale copies of an
+ * outdated CV alongside the current one.
  *
- * The corpus is ~2k tokens — small enough to hand to the model whole, which
- * removes retrieval, chunk-boundary errors and the purge-on-update problem.
+ * Two structural choices matter here:
+ *
+ * 1. **XML delimiters, not headings.** Markdown headings put the facts and the
+ *    behavioural rules on the same footing — a second `# H1` made the
+ *    instructions look like a chapter of the CV. Tagged blocks give the model
+ *    an unambiguous boundary between "things that are true" and "things to do".
+ * 2. **No heading collisions.** Programming languages and spoken languages both
+ *    used to be called "Languages" in the same document.
  */
 export function buildKnowledgeDocument(): string {
-  const sections: string[] = [];
+  const facts: string[] = [];
 
-  sections.push(
-    [
-      `# ${profile.name} — knowledge base`,
-      "",
-      "This is the complete, authoritative source about Rudy Haddad.",
-      "Answer only from what is written here.",
-    ].join("\n"),
-  );
-
-  sections.push(
+  facts.push(
     [
       "## Identity",
       "",
@@ -55,21 +51,31 @@ export function buildKnowledgeDocument(): string {
     ].join("\n"),
   );
 
-  sections.push(["## Summary", "", profile.about, "", profile.linkedinAbout].join("\n"));
-
-  sections.push(
+  facts.push(
     [
-      "## Availability",
+      "## Summary",
       "",
+      profile.about,
+      "",
+      // Quoted and attributed: this one is written in the first person for the
+      // LinkedIn page, and an unmarked "I" would drag the assistant's voice
+      // out of the third person mid-answer.
+      `In his own words: "${profile.linkedinAbout}"`,
+    ].join("\n"),
+  );
+
+  facts.push(
+    [
+      "## Roles of interest",
+      "",
+      `- Looking for: ${availability.roles}`,
       `- Status: ${availability.status}`,
-      `- ${availability.summary}`,
-      `- Roles of interest: ${availability.roles}`,
       "",
       ...rolesOfInterest.map((role) => `- ${role.title}: ${role.description}`),
     ].join("\n"),
   );
 
-  sections.push(
+  facts.push(
     [
       "## Professional experience",
       "",
@@ -84,7 +90,7 @@ export function buildKnowledgeDocument(): string {
       .trimEnd(),
   );
 
-  sections.push(
+  facts.push(
     [
       "## Projects",
       "",
@@ -103,12 +109,14 @@ export function buildKnowledgeDocument(): string {
       .trimEnd(),
   );
 
-  sections.push(
+  facts.push(
     [
-      "## Skills",
+      "## Technical skills",
       "",
       ...skillCategories.map(
-        (category) => `### ${category.title}\n${category.chips.join(", ")}\n${category.note}`,
+        (category) =>
+          `### ${category.title === "Languages" ? "Programming languages" : category.title}\n` +
+          `${category.chips.join(", ")}\n${category.note}`,
       ),
       "",
       `Technical (condensed): ${technicalSkills.map((s) => s.label).join(", ")}`,
@@ -117,7 +125,7 @@ export function buildKnowledgeDocument(): string {
     ].join("\n"),
   );
 
-  sections.push(
+  facts.push(
     [
       "## Education and certifications",
       "",
@@ -126,21 +134,35 @@ export function buildKnowledgeDocument(): string {
     ].join("\n"),
   );
 
-  sections.push(
+  facts.push(
     [
-      "## Languages",
+      // Explicitly "spoken": the skills block already owns "Programming languages".
+      "## Spoken languages",
       "",
       ...languages.map((language) => `- ${language.name}: ${language.level}`),
     ].join("\n"),
   );
 
-  sections.push(
+  facts.push(
     ["## Key figures", "", ...stats.map((stat) => `- ${stat.value} ${stat.label}`)].join("\n"),
   );
 
-  sections.push(extraKnowledge.trim());
+  facts.push(extraKnowledge.trim());
 
-  return `${sections.join("\n\n")}\n`;
+  return [
+    "<knowledge_base>",
+    `Facts about ${profile.name}. This is the only source of facts you may use.`,
+    "",
+    facts.join("\n\n"),
+    "</knowledge_base>",
+    "",
+    "<operating_rules>",
+    "How to behave. These are instructions, not facts to recite.",
+    "",
+    assistantRules.trim(),
+    "</operating_rules>",
+    "",
+  ].join("\n");
 }
 
 /**

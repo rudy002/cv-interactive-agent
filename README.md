@@ -104,8 +104,9 @@ Open <http://localhost:3000>.
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
-| `npm test` | Vitest, single run |
-| `npm run test:watch` | Vitest, watch mode |
+| `npm test` | Unit + structural suite, single run. Free, ~6s. |
+| `npm run test:watch` | Same, watch mode |
+| `npm run eval` | **Behavioural suite against the live agent.** Spends credits. |
 
 ## Environment
 
@@ -134,3 +135,29 @@ The endpoint is public and spends real credits downstream, so it:
 
 For serious traffic, swap the in-memory limiter in
 [`lib/rate-limit.ts`](lib/rate-limit.ts) for a shared store (e.g. Upstash Redis).
+
+## Testing the agent
+
+Two suites, deliberately separate.
+
+**`npm test`** — 280 cases, free and instant. Proves the *structure* holds:
+every project and skill on the site reaches the agent's knowledge base, the
+prompt has no duplicate headings or competing H1s, facts and rules sit in
+different tagged blocks, no first-person leakage, the n8n workflow points at a
+URL that matches `data/profile.ts`.
+
+**`npm run eval`** — 21 cases against the **live** agent. Proves the *behaviour*
+holds: it really refuses the Pythagorean theorem, really answers a Hebrew
+question in Hebrew, really declines to quote a salary, really resists "ignore
+your previous instructions". Structure and behaviour are different failure
+modes; the first suite cannot catch the second.
+
+```bash
+npm run eval                                   # against production
+EVAL_TARGET=http://localhost:3000 npm run eval # against a local server
+EVAL_DELAY_MS=8000 npm run eval                # slower, if rate-limited
+```
+
+Costs roughly **$0.01 per run** and takes ~2 minutes — the pacing keeps it
+under the 12 requests/minute limit on `/api/chat`. Run it after changing the
+prompt, the knowledge base, or the model.

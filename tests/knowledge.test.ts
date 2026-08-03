@@ -81,9 +81,9 @@ describe("the agent knows everything the site shows", () => {
     expect(doc).toMatch(/Scope/i);
     expect(doc).toMatch(/not a general-purpose AI/i);
     expect(doc).toMatch(/Pythagorean/i);
-    // "decline **first**, then offer" — the emphasis wraps the whole phrase.
-    expect(doc).toMatch(/decline\s+first/i);
-    expect(doc).toMatch(/Do not answer and then redirect/i);
+    expect(doc).toMatch(/decline\s+\*\*first\*\*/i);
+    expect(doc).toMatch(/Never answer and then redirect/i);
+    expect(doc).toMatch(/never make an exception/i);
   });
 
   it("still allows humour and questions about how the site is built", () => {
@@ -105,8 +105,9 @@ describe("document shape", () => {
     expect(doc.trimEnd().endsWith("`")).toBe(false);
   });
 
-  it("opens with a heading that frames it for the model", () => {
-    expect(doc.startsWith(`# ${profile.name}`)).toBe(true);
+  it("opens with the tag that separates facts from instructions", () => {
+    expect(doc.startsWith("<knowledge_base>")).toBe(true);
+    expect(doc.trimEnd().endsWith("</operating_rules>")).toBe(true);
   });
 
   it("has no unresolved template placeholders", () => {
