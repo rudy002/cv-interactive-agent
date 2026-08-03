@@ -100,7 +100,7 @@ export const projects: Project[] = [
     tagline: "AI-powered portfolio with chat interface",
     description:
       "Conversational AI portfolio letting recruiters query skills and experience through a chat interface, with a browser panel that follows the conversation.",
-    tech: ["Next.js", "TypeScript", "n8n", "RAG", "OpenAI", "Pinecone", "Tailwind CSS"],
+    tech: ["Next.js", "TypeScript", "n8n", "OpenAI", "SSE streaming", "Vitest", "Tailwind CSS"],
     links: [
       { label: "Live", href: links.site },
       {
@@ -110,7 +110,8 @@ export const projects: Project[] = [
     ],
     highlights: [
       "Conversational AI portfolio (Next.js, LLM, n8n workflows) letting recruiters query skills and experience through a chat interface.",
-      "Ingestion/update/chat workflows over the CV and projects, with structured prompts separating instructions from knowledge.",
+      "Measured the knowledge corpus at ~2k tokens and dropped vector retrieval for full-context prompting: one LLM call instead of three, and answers three times faster.",
+      "Single source of truth: one endpoint serves the site's own data to the agent, so the pages and the assistant can never describe different people.",
       "Fake browser side-panel that opens the GitHub, LinkedIn or skills page each answer is about.",
     ],
   },
