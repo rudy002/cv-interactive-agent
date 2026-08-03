@@ -74,6 +74,22 @@ describe("the agent knows everything the site shows", () => {
     expect(doc).toMatch(/Questions recruiters ask most/i);
     expect(doc).toMatch(/Answer in the language the visitor writes in/i);
   });
+
+  // The assistant must read as an interactive CV, not as a general-purpose bot
+  // that happens to know a résumé.
+  it("tells the agent to refuse anything outside Rudy's profile", () => {
+    expect(doc).toMatch(/Scope/i);
+    expect(doc).toMatch(/not a general-purpose AI/i);
+    expect(doc).toMatch(/Pythagorean/i);
+    // "decline **first**, then offer" — the emphasis wraps the whole phrase.
+    expect(doc).toMatch(/decline\s+first/i);
+    expect(doc).toMatch(/Do not answer and then redirect/i);
+  });
+
+  it("still allows humour and questions about how the site is built", () => {
+    expect(doc).toMatch(/Light humour/i);
+    expect(doc).toMatch(/how this site and this assistant are built/i);
+  });
 });
 
 describe("document shape", () => {
