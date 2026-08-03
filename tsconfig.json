@@ -38,18 +38,22 @@
     "app/**/*.tsx",
     "components/**/*.ts",
     "components/**/*.tsx",
+    "data/**/*.ts",
     "hooks/**/*.ts",
     "hooks/**/*.tsx",
+    "lib/**/*.ts",
+    "lib/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
     "types/**/*.ts",
     "types/**/*.d.ts",
     "**/*.mts",
+    "vitest.config.mts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    ".next",
-    "**/Avatar*.tsx",
-    "**/Avatar*.ts"
+    ".next"
   ]
 }

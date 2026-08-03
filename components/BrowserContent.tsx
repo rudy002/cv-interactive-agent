@@ -1,14 +1,14 @@
 "use client";
 
+import type { PageId } from "@/data/pages";
+import ChatInterfaces from "./ChatInterfaces";
+import GitHubPage from "./pages/GitHubPage";
 import HomePage from "./pages/HomePage";
 import LinkedInPage from "./pages/LinkedInPage";
-import GitHubPage from "./pages/GitHubPage";
-import ChatInterfaces from "./ChatInterfaces";
-
 import SkillsPage from "./pages/SkillsPage";
 
 interface BrowserContentProps {
-  pageId: string;
+  pageId: PageId;
 }
 
 export default function BrowserContent({ pageId }: BrowserContentProps) {

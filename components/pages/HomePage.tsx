@@ -1,147 +1,124 @@
 "use client";
 
 import { useState } from "react";
-import { Linkedin, Code2, MapPin, Mail, ExternalLink, Check } from "lucide-react";
+import Image from "next/image";
+import { Check, Code2, ExternalLink, Linkedin, Mail, MapPin } from "lucide-react";
+import { links, profile, stats } from "@/data/profile";
+
+const MAILTO = `mailto:${profile.email}?subject=${encodeURIComponent(
+  "Contact from your interactive CV",
+)}&body=${encodeURIComponent("Hi Rudy,\n\n")}`;
 
 export default function HomePage() {
   const [emailCopied, setEmailCopied] = useState(false);
 
+  /**
+   * Let the browser follow the `mailto:` normally, and copy the address as a
+   * safety net: without a registered mail handler the link silently does
+   * nothing, which used to leave visitors with no way to reach out.
+   */
   const handleEmailClick = async () => {
-    const email = "rudyhaddad.job@gmail.com";
-    const mailtoLink = `mailto:${email}?subject=Contact%20depuis%20le%20CV%20interactif&body=Bonjour%20Rudy%2C%0A%0A`;
-    
-    // Essayer d'abord d'ouvrir le client de messagerie
     try {
-      // Créer un lien temporaire et le cliquer
-      const link = document.createElement('a');
-      link.href = mailtoLink;
-      link.style.display = 'none';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      // Attendre un peu pour voir si le client de messagerie s'ouvre
-      setTimeout(() => {
-        // Si après 500ms rien ne s'est passé, copier l'email
-        copyEmailToClipboard(email);
-      }, 500);
-    } catch (error) {
-      // En cas d'erreur, copier l'email directement
-      copyEmailToClipboard(email);
+      await navigator.clipboard.writeText(profile.email);
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 3000);
+    } catch {
+      // Clipboard blocked: the mailto navigation still happens.
     }
   };
 
-  const copyEmailToClipboard = async (email: string) => {
-    try {
-      await navigator.clipboard.writeText(email);
-      setEmailCopied(true);
-      setTimeout(() => {
-        setEmailCopied(false);
-      }, 3000);
-    } catch (error) {
-      // Fallback pour les navigateurs qui ne supportent pas l'API Clipboard
-      const textArea = document.createElement('textarea');
-      textArea.value = email;
-      textArea.style.position = 'fixed';
-      textArea.style.opacity = '0';
-      document.body.appendChild(textArea);
-      textArea.select();
-      try {
-        document.execCommand('copy');
-        setEmailCopied(true);
-        setTimeout(() => {
-          setEmailCopied(false);
-        }, 3000);
-      } catch (err) {
-        console.error('Impossible de copier l\'email:', err);
-      }
-      document.body.removeChild(textArea);
-    }
-  };
   return (
-    <div className="h-full overflow-y-auto bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950 scroll-smooth">
+    <div className="h-full overflow-y-auto bg-linear-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950 scroll-smooth">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-5xl font-bold shadow-2xl">
-            <img src="/images/linkedin-photo.jpeg" alt="Rudy Haddad" className="w-full h-full object-cover rounded-full" />
+        <header className="text-center mb-16">
+          <div className="w-28 h-28 sm:w-32 sm:h-32 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl ring-4 ring-white dark:ring-zinc-800">
+            <Image
+              src={profile.avatar}
+              alt={`${profile.name} portrait`}
+              width={128}
+              height={128}
+              className="w-full h-full object-cover"
+              priority
+            />
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
-            Rudy Haddad
+            {profile.name}
           </h1>
           <p className="text-xl sm:text-2xl text-zinc-600 dark:text-zinc-400 mb-6">
-            Full-Stack Developer & AI Expert
+            {profile.headline}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 text-zinc-500 dark:text-zinc-500">
             <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4" />
-              <span>Israel</span>
+              <MapPin className="w-4 h-4" aria-hidden="true" />
+              <span>{profile.location}</span>
             </div>
             <div className="flex items-center gap-2 relative">
-              <Mail className="w-4 h-4" />
-              <button
-                type="button"
+              <Mail className="w-4 h-4" aria-hidden="true" />
+              <a
+                href={MAILTO}
                 onClick={handleEmailClick}
-                className="text-blue-600 dark:text-blue-400 hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 rounded cursor-pointer bg-transparent border-none p-0"
-                title="Cliquez pour ouvrir votre client de messagerie ou copier l'email"
+                className="text-blue-600 dark:text-blue-400 hover:underline font-medium rounded-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500"
+                title="Opens your mail client — the address is copied to your clipboard too"
               >
-                rudyhaddad.job@gmail.com
-              </button>
+                {profile.email}
+              </a>
               {emailCopied && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 flex items-center gap-2 bg-green-500 text-white px-3 py-1.5 rounded-lg text-sm shadow-lg z-50 whitespace-nowrap">
-                  <Check className="w-4 h-4" />
-                  <span>copy !</span>
+                <div
+                  role="status"
+                  className="absolute left-1/2 -translate-x-1/2 top-full mt-2 flex items-center gap-2 bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm shadow-lg z-50 whitespace-nowrap"
+                >
+                  <Check className="w-4 h-4" aria-hidden="true" />
+                  <span>Email copied!</span>
                 </div>
               )}
             </div>
           </div>
-        </div>
+        </header>
 
-        {/* Quick Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 sm:max-w-2xl mx-auto gap-4 sm:gap-6 mb-12 sm:mb-16">
-          <div className="bg-white dark:bg-zinc-800 rounded-xl p-5 sm:p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700 active:scale-[0.98] transition-transform">
-            <div className="text-3xl sm:text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">8+</div>
-            <div className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">Real-world projects (academic, freelance & personal)</div>
-          </div>
-          <div className="bg-white dark:bg-zinc-800 rounded-xl p-5 sm:p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700 active:scale-[0.98] transition-transform">
-            <div className="text-3xl sm:text-4xl font-bold text-green-600 dark:text-green-400 mb-2">15+</div>
-            <div className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">Technologies mastered</div>
-          </div>
+          {stats.map((stat) => (
+            <div
+              key={stat.label}
+              className="bg-white dark:bg-zinc-800 rounded-xl p-5 sm:p-6 text-center shadow-lg border border-zinc-200 dark:border-zinc-700"
+            >
+              <div className={`text-3xl sm:text-4xl font-bold mb-2 ${stat.accent}`}>
+                {stat.value}
+              </div>
+              <div className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
+                {stat.label}
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* About */}
-        <div className="bg-white dark:bg-zinc-800 rounded-xl p-8 shadow-lg border border-zinc-200 dark:border-zinc-700 mb-8">
+        <section className="bg-white dark:bg-zinc-800 rounded-xl p-8 shadow-lg border border-zinc-200 dark:border-zinc-700 mb-8">
           <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">About Me</h2>
-          <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
-            As an early-career software engineer, I focus on AI-powered systems, LLM applications and data workflows. I work with React, Next.js, Node.js and Python to build RAG pipelines, automation workflows and web apps that turn raw data into useful products.
-          </p>
-        </div>
+          <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">{profile.about}</p>
+        </section>
 
-        {/* Quick Links */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-          <a 
-            href="https://linkedin.com/in/rudy-haddad" 
+          <a
+            href={links.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 bg-blue-600 active:bg-blue-700 hover:bg-blue-700 text-white rounded-xl p-4 sm:p-4 transition-all shadow-lg active:scale-[0.98] touch-manipulation min-h-[56px]"
+            className="flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl p-4 transition-all shadow-lg active:scale-[0.98] touch-manipulation min-h-14 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-400"
           >
-            <Linkedin className="w-5 h-5 flex-shrink-0" />
+            <Linkedin className="w-5 h-5 shrink-0" aria-hidden="true" />
             <span className="font-medium text-sm sm:text-base">View LinkedIn Profile</span>
-            <ExternalLink className="w-4 h-4 ml-auto flex-shrink-0" />
+            <ExternalLink className="w-4 h-4 ml-auto shrink-0" aria-hidden="true" />
           </a>
-          <a 
-            href="https://github.com/rudy002/" 
+          <a
+            href={links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 bg-zinc-800 active:bg-zinc-900 hover:bg-zinc-900 dark:bg-zinc-700 dark:active:bg-zinc-600 dark:hover:bg-zinc-600 text-white rounded-xl p-4 sm:p-4 transition-all shadow-lg active:scale-[0.98] touch-manipulation min-h-[56px]"
+            className="flex items-center gap-3 bg-zinc-800 hover:bg-zinc-900 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-white rounded-xl p-4 transition-all shadow-lg active:scale-[0.98] touch-manipulation min-h-14 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-400"
           >
-            <Code2 className="w-5 h-5 flex-shrink-0" />
+            <Code2 className="w-5 h-5 shrink-0" aria-hidden="true" />
             <span className="font-medium text-sm sm:text-base">View GitHub Profile</span>
-            <ExternalLink className="w-4 h-4 ml-auto flex-shrink-0" />
+            <ExternalLink className="w-4 h-4 ml-auto shrink-0" aria-hidden="true" />
           </a>
         </div>
       </div>
     </div>
   );
 }
-

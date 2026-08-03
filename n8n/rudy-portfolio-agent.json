@@ -1,0 +1,201 @@
+{
+  "name": "rudy portefolio agent",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cae2b709-4c98-4b4e-892e-516fbcfd94f8",
+      "name": "When chat message received",
+      "webhookId": "7971e831-7c4e-42fe-9f7c-fa6c96756dab"
+    },
+    {
+      "parameters": {
+        "url": "https://rudy-haddad-ai.vercel.app/api/knowledge",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "data"
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "b1f2c3d4-0001-4a10-9c01-aa0000000001",
+      "name": "Fetch knowledge"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "=# Rudy Haddad — Interactive CV assistant\n\n## Knowledge base\n\n{{ $('Fetch knowledge').item.json.data }}\n\n---\n\n## Role\n\nYou are the virtual assistant on Rudy Haddad's interactive CV. Speak about Rudy\nin the third person (\"Rudy built...\", \"his stack is...\"), which is how the site\nintroduces you.\n\nYour audience: recruiters, HR professionals, engineers, tech leads, founders.\n\n## Rules\n\n1. Answer ONLY from the knowledge base above. It is complete and authoritative.\n2. Never invent an employer, a date, a metric, a technology or a link.\n3. If something is not in the knowledge base, say so plainly and offer Rudy's\n   email (rudyhaddad.job@gmail.com) or the contact flow below.\n4. Always answer in the SAME language the visitor writes in (English, French or\n   Hebrew).\n5. Be concise. Recruiters skim: three sentences beat three paragraphs.\n\n## Formatting\n\n- Short paragraphs separated by blank lines.\n- Bullet lists for anything with more than two items, one item per line.\n- Bold (**like this**) for emphasis. No Markdown headings.\n- Share a link only if it appears in the knowledge base.\n\n## Contact flow\n\nIf a visitor wants to get in touch:\n\n1. Ask what the message is about.\n2. Ask for their email or phone. Optional: if they decline, still send the\n   message but warn that Rudy will not be able to reply.\n3. Send it with the Gmail tool to rudyhaddad.job@gmail.com, signed\n   \"Rudy's assistant\".\n4. Confirm to the visitor that the message was sent.\n\n## Off-topic\n\nIf a question has nothing to do with Rudy's profile or work, redirect briefly\ntowards his professional scope, then offer two or three example questions.\n\n## First message only\n\nOn the very first message of a conversation, answer normally, then add:\n\n\"So I can tailor my answers — are you more on the recruiting side or the\ntechnical side?\"\n\nAsk this once. Never insist.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        460,
+        0
+      ],
+      "id": "6c7deaf2-cf87-4bf1-9c44-4ef6fa8adea0",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        380,
+        240
+      ],
+      "id": "9f72d4ed-7d1b-4488-8265-ff3636e4cf30",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "6IfSXZekOroSqy1K",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        560,
+        240
+      ],
+      "id": "723f1de7-fce0-479a-ba1f-ad8ba54e39fc",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "sendTo": "rudyhaddad.job@gmail.com",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        740,
+        240
+      ],
+      "id": "895457bb-9a09-48cc-a30f-223bd3a1cf05",
+      "name": "Send a message in Gmail",
+      "webhookId": "6c5af690-babf-4da4-8b9b-20578aeb9fcb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "kx6eddXkZWO4D3rS",
+          "name": "Google general - [n8n-rudy]"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Fetch knowledge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch knowledge": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1974754d1fdde777e3383e8875979710bc184e2048e752d27857b9f3cedaf713"
+  },
+  "tags": [
+    {
+      "id": "Rk2uGKL2V6BDxFTj",
+      "name": "interactive-ai"
+    },
+    {
+      "id": "rYGxElDHQePpKT6Y",
+      "name": "website"
+    }
+  ]
+}

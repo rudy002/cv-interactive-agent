@@ -1,123 +1,51 @@
 "use client";
 
-const cardClass =
-  "bg-gradient-to-br from-white via-white to-blue-50 dark:from-zinc-900 dark:via-slate-900 dark:to-zinc-950 rounded-xl p-6 shadow border border-blue-100 dark:border-zinc-800";
+import { skillCategories } from "@/data/skills";
 
-const categories = [
-  {
-    title: "Frontend",
-    icon: "⚛️",
-    chips: [
-      "React",
-      "Next.js (pages/app)",
-      "TypeScript",
-      "Tailwind CSS",
-      "UI libs (MUI, etc.)",
-    ],
-    note: "Builds chat UIs, faux browser panels, dashboards.",
-  },
-  {
-    title: "Backend & APIs",
-    icon: "🔧",
-    chips: [
-      "Node.js / Express",
-      "REST APIs",
-      "Webhooks",
-      "Auth (basic/JWT)",
-      "API integrations",
-    ],
-    note: "Focus on data flows, integrations, and delivery speed.",
-  },
-  {
-    title: "Data & Storage",
-    icon: "🗄️",
-    chips: [
-      "PostgreSQL",
-      "MongoDB",
-      "Supabase",
-      "Airtable",
-      "External APIs as sources",
-    ],
-    note: "From structured DBs to API-backed datasets.",
-  },
-  {
-    title: "AI & Automation",
-    icon: "🤖",
-    chips: [
-      "n8n workflows",
-      "LLM (OpenAI & others)",
-      "RAG (Pinecone)",
-      "Drive/text ingestion",
-      "Structured prompts",
-      "Tooling chatbots",
-      "Retries/error handling",
-    ],
-    note: "Agents connected to real data (CV, projects, docs).",
-  },
-  {
-    title: "DevOps & Delivery",
-    icon: "🚀",
-    chips: [
-      "Git / GitHub",
-      "Render / Vercel",
-      "Hosted n8n",
-      "Env vars & secrets",
-      "Light CI (GitHub Actions)",
-    ],
-    note: "Pragmatic deploys and environment hygiene.",
-  },
-  {
-    title: "CS & Data foundations",
-    icon: "📐",
-    chips: [
-      "Data structures / algos",
-      "Complexity",
-      "Graphs / NetworkX",
-      "pandas / notebooks",
-      "Classical ML (sklearn)",
-    ],
-    note: "Grounding for reasoning about data and performance.",
-  },
-];
+const cardClass =
+  "bg-linear-to-br from-white via-white to-blue-50 dark:from-zinc-900 dark:via-slate-900 dark:to-zinc-950 rounded-xl shadow-sm border border-blue-100 dark:border-zinc-800";
 
 export default function SkillsPage() {
   return (
     <div className="h-full overflow-y-auto bg-zinc-50 dark:bg-zinc-950 scroll-smooth">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
-        <div className="text-center">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-2 sm:mb-3">Skills & Tooling</h1>
+        <header className="text-center">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-zinc-100 mb-2 sm:mb-3">
+            Skills &amp; Tooling
+          </h1>
           <p className="text-sm sm:text-base lg:text-lg text-zinc-600 dark:text-zinc-400 px-2">
-            Stacks, workflows et fondamentaux que j'utilise au quotidien.
+            The stacks, workflows and fundamentals I work with day to day.
           </p>
-        </div>
+        </header>
 
         <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
-          {categories.map((cat) => (
-            <div key={cat.title} className={`${cardClass} p-4 sm:p-6`}>
+          {skillCategories.map((category) => (
+            <section key={category.title} className={`${cardClass} p-4 sm:p-6`}>
               <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <span className="text-xl sm:text-2xl">{cat.icon}</span>
-                <h2 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100">{cat.title}</h2>
+                <span className="text-xl sm:text-2xl" aria-hidden="true">
+                  {category.icon}
+                </span>
+                <h2 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-100">
+                  {category.title}
+                </h2>
               </div>
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-2 sm:mb-3">
-                {cat.chips.map((chip) => (
-                  <span
+              <ul className="flex flex-wrap gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                {category.chips.map((chip) => (
+                  <li
                     key={chip}
                     className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-zinc-100 text-zinc-800 text-xs dark:bg-white/10 dark:text-white"
                   >
                     {chip}
-                  </span>
+                  </li>
                 ))}
-              </div>
-              {cat.note && (
-                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300">
-                  {cat.note}
-                </p>
-              )}
-            </div>
+              </ul>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300">
+                {category.note}
+              </p>
+            </section>
           ))}
         </div>
       </div>
     </div>
   );
 }
-
