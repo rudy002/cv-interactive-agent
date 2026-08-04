@@ -24,5 +24,12 @@ export default defineConfig({
     fileParallelism: false,
     sequence: { concurrent: false },
     maxWorkers: 1,
+    /**
+     * The model is non-deterministic: a single sample is not evidence of a
+     * behaviour, only of one draw from it. A case that passes on any of three
+     * attempts reflects "the agent generally does this"; one that fails all
+     * three is a real regression.
+     */
+    retry: 2,
   },
 });

@@ -1,0 +1,35 @@
+Voici mon CV actuel (en pièce jointe). Je veux modifier UNE SEULE entrée : le
+projet "Interactive CV" dans la section PROJECTS.
+
+Ne touche à rien d'autre : ni la mise en page, ni les polices, ni les marges, ni
+les autres sections. Le CV doit rester sur UNE SEULE PAGE.
+
+TEXTE ACTUEL À REMPLACER
+------------------------
+Interactive CV — AI-Powered Portfolio with Chat Interface    rudy-haddad-ai.vercel.app
+ – Built a conversational AI portfolio (Next.js, LLM, n8n workflows) letting
+   recruiters query skills and experience through a chat interface.
+
+NOUVEAU TEXTE
+-------------
+Interactive CV — AI-Powered Portfolio with Chat Interface    rudy-haddad-ai.vercel.app
+ – Built a conversational AI portfolio (Next.js, LLM, n8n) letting recruiters
+   query skills and experience through a chat interface.
+ – Measured the knowledge corpus at ~2k tokens and replaced vector retrieval with
+   full-context prompting: 3 LLM calls per question down to 1, answer latency
+   from 5–10s to ~3s.
+ – Single source of truth: one endpoint serves the site's own data to the agent,
+   so the pages and the assistant cannot describe different people. Covered by
+   280 structural tests and 21 behavioural evals run against the live agent.
+
+CONTRAINTE DE PLACE
+-------------------
+Si les trois puces font déborder le CV sur une deuxième page, supprime la
+TROISIÈME puce (celle sur la source unique de vérité) et garde les deux
+premières. La deuxième puce est la plus importante : elle ne doit jamais sauter.
+
+Si ça déborde encore, raccourcis la deuxième puce en :
+ – Replaced vector retrieval with full-context prompting after measuring the
+   corpus at ~2k tokens: 3 LLM calls per question down to 1, latency 5–10s → ~3s.
+
+Rends-moi le CV modifié au même format que l'original.

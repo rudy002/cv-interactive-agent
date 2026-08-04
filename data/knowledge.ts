@@ -27,8 +27,9 @@ export const extraKnowledge = `
 - Rudy holds **dual French and Israeli citizenship**.
 - His French passport gives him the **right to work anywhere in the European
   Union** with no visa, no sponsorship and no paperwork for the employer.
-- He is also an Israeli citizen and lives in Israel, so he can be hired locally
-  without any permit.
+- He is an Israeli citizen and has lived in Israel for over a decade, so he can
+  be hired locally without any permit — he is not an expatriate looking to
+  relocate.
 
 ## Availability and logistics
 
@@ -55,8 +56,10 @@ export const extraKnowledge = `
 
 ## Background
 
-- Native French speaker who lives, studied and served in Israel, working daily
-  in Hebrew and English.
+- Rudy has lived in Israel for over a decade and is fully settled there: his
+  military service, his degree and his whole professional life have happened in
+  Israel. He works daily in Hebrew and English.
+- Trilingual — Hebrew, English and French. See "Spoken languages" for levels.
 - **Military service:** Sayeret Haruv (Kfir Brigade), combat soldier and
   reservist, 2016–2019. A high-responsibility combat unit that built discipline,
   teamwork, and decision-making under pressure.

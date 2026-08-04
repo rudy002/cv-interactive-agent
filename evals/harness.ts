@@ -1,3 +1,5 @@
+import { expect } from "vitest";
+
 /**
  * Test harness for the behavioural evaluation suite.
  *
@@ -122,4 +124,50 @@ export function looksHebrew(answer: string): boolean {
 
 export function preflight(): string {
   return TARGET;
+}
+
+/**
+ * Assertions that print the answer they judged.
+ *
+ * A behavioural failure is useless without the text that caused it — otherwise
+ * you re-query the agent by hand to find out what it actually said.
+ */
+export function expectAnswer(question: string, answer: string) {
+  const context = (detail: string) =>
+    `${detail}\n\n    Q: ${question}\n    A: ${answer.replace(/\n/g, "\n       ")}\n`;
+
+  return {
+    mentionsAny(alternatives: string[]) {
+      expect(
+        mentionsAny(answer, alternatives),
+        context(`expected the answer to mention one of ${JSON.stringify(alternatives)}`),
+      ).toBe(true);
+    },
+
+    mentionsNone(forbidden: string[]) {
+      const found = mentionsNone(answer, forbidden);
+      expect(found, context(`answer leaked forbidden terms: ${JSON.stringify(found)}`)).toEqual(
+        [],
+      );
+    },
+
+    matches(pattern: RegExp) {
+      expect(pattern.test(answer), context(`expected the answer to match ${pattern}`)).toBe(true);
+    },
+
+    doesNotMatch(pattern: RegExp) {
+      expect(pattern.test(answer), context(`expected the answer NOT to match ${pattern}`)).toBe(
+        false,
+      );
+    },
+
+    isShorterThan(words: number) {
+      const count = answer.split(/\s+/).length;
+      expect(count, context(`answer ran to ${count} words, limit ${words}`)).toBeLessThan(words);
+    },
+
+    satisfies(predicate: (text: string) => boolean, description: string) {
+      expect(predicate(answer), context(`expected the answer to ${description}`)).toBe(true);
+    },
+  };
 }
